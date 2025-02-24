@@ -1,0 +1,39 @@
+<div class="admin-container">
+	<h2 class="h2">アクティブストレージ一覧</h2>
+  <table class="admin_table">
+		<thead>
+			<tr>
+				<th>ID</th>
+				<th>UserID</th>
+				<th>Nickname</th>
+				<th>Filename</th>
+				<th>Type</th>
+				<th>Size (KB)</th>
+				<th>Media</th>
+				<th>Action</th> <!-- 新しく「Action」列を追加 -->
+			</tr>
+		</thead>
+		<tbody>
+			<% @profiles.each do |profile| %>
+				<tr>
+					<td><%= profile.id %></td>
+					<td><%= profile.user_id %></td>
+					<td><%= profile.nickname %></td>
+					<% if profile.image.attached? %>
+						<td><%= profile.image.filename.to_s %></td>
+						<td><%= profile.image.content_type %></td>
+						<td><%= profile.image.byte_size / 1024 %></td>
+						<td><%= link_to 'View Media', url_for(profile.image), target: '_blank' %></td>
+						<td>
+							<%= link_to '圧縮', compress_media_admin_profile_path(profile.id), method: :post, class: "btn btn-primary" %>
+						</td>
+					<% else %>
+						<td colspan="3">No Media</td>
+						<td></td> <!-- アクションカラムのスペース確保 -->
+					<% end %>
+				</tr>
+			<% end %>
+		</tbody>
+	</table>
+</div>
+

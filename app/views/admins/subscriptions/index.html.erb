@@ -1,0 +1,28 @@
+<div class="admin-container">
+	<h2 class="h2">サブスクリプション一覧</h2>
+  <table class="admin_table">
+		<thead>
+			<tr>
+				<% Subscription.column_names.each do |column| %>
+					<th><%= column.humanize %></th>
+				<% end %>
+				<th>button</th>
+			</tr>
+		</thead>
+		<tbody>
+			<% @subscriptions.each do |subscription| %>
+				<tr>
+					<% Subscription.column_names.each do |column| %>
+						<td><%= subscription[column] %></td>
+					<% end %>
+					<td>
+						<%= link_to '編集', edit_admin_subscription_path(subscription), class: "btn btn-primary" %>
+						<% if subscription.user_id != current_user.id %>
+              <%= link_to '削除', destroy_admin_subscription_path(subscription), method: :delete, data: { confirm: "本当に削除しますか？" }, class: "btn btn-danger" %>
+            <% end %>
+					</td>
+				</tr>
+			<% end %>
+		</tbody>
+	</table>
+</div>

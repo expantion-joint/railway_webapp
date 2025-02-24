@@ -1,0 +1,4 @@
+<% comments.each_with_index do |comment, i| %>
+  <%= render partial: "comment", locals: { comment: comment, comment_user_profile: comment_user_profiles[i] } %>
+<% end %>
+

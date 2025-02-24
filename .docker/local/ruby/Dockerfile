@@ -1,4 +1,4 @@
-FROM ruby:3.2.2
+FROM ruby:3.3.0
 
 # yarn install
 #RUN curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add - && \
@@ -9,6 +9,11 @@ RUN apt-get update && \
     npm install n -g && \
     n 16.0.0 && \
     gem install rails
+
+# ffmpeg install
+RUN sed -i 's|http://deb.debian.org|https://deb.debian.org|g' /etc/apt/sources.list.d/debian.sources && \
+    apt-get update && \
+    apt-get install -y ffmpeg
 
 WORKDIR /src
 

@@ -1,0 +1,25 @@
+<div class="admin-container">
+	<h2 class="h2">コメント一覧</h2>
+  <table class="admin_table">
+		<thead>
+			<tr>
+				<% Comment.column_names.each do |column| %>
+					<th><%= column.humanize %></th>
+				<% end %>
+				<th>button</th>
+			</tr>
+		</thead>
+		<tbody>
+			<% @comments.each do |comment| %>
+				<tr>
+					<% Comment.column_names.each do |column| %>
+						<td><%= comment[column] %></td>
+					<% end %>
+					<td>
+            <%= link_to '削除', destroy_admin_comment_path(comment), method: :delete, data: { confirm: "本当に削除しますか？" }, class: "btn btn-danger" %>
+					</td>
+				</tr>
+			<% end %>
+		</tbody>
+	</table>
+</div>

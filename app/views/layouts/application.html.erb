@@ -1,13 +1,224 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Src</title>
+    <!-- title -->
+    <title>推し鉄.com&nbsp;|&nbsp;鉄道ファンのためのオンラインコミュニティ</title>
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
+    <!-- Style -->
+    <link rel="stylesheet" href="<%= mix('/css/app.css') %>">
+    <!-- Javascript -->
+    <script src="<%= mix('/js/bootstrap.js') %>"></script>
+    <!-- turbo.js -->
+    <script src="<%= mix('/js/turbo.js') %>"></script>
+    <!-- stripe -->
+    <script src="https://js.stripe.com/v3"></script>
+    <!-- ファビコン -->
+    <%= favicon_link_tag('favicon.ico') %>
   </head>
 
   <body>
-    <%= yield %>
+    <% if user_signed_in? %>
+      <div class="main-container">
+      <!--  ナビゲーションバー -->
+      <nav class="custom-navbar">
+        <div id="menuToggle">
+          <input type="checkbox" />
+          <span></span>
+          <span></span>
+          <span></span>
+          <div class=app-header-menu>menu</div>
+          <% if @subscription.stripe_payment_status == "paid" %>
+            <ul id="menu">
+              <div class ="menu-text-bold">
+                <% if current_user&.admin? %>
+                  <li>
+                    <%= link_to "管理者ページ", new_admin_session_path, class: "nav-link" %>
+                    <div class="under-line"></div>
+                  </li>
+                <% end %>
+                <li>
+                  <%= link_to "ホーム", index_post_path, class: "nav-link" %>
+                  <div class="under-line"></div>
+                </li>
+                <li>
+                  <%= link_to "マイページ", show_profile_path(current_user.id), class: "nav-link" %>
+                  <div class="under-line"></div>
+                </li>
+                <li>
+                  <%= link_to "新規投稿", new_post_path, class: "nav-link" %>
+                  <div class="under-line"></div>
+                </li>
+                <li>
+                  <%= link_to "いいねランキング", show_like_path, class: "nav-link" %>
+                  <div class="under-line"></div>
+                </li>
+              </div>
+
+              <div class="menu-section-container">
+                <li>
+                  <div class="section-title">#設定</div>
+                </li>
+                <li>
+                  <%= link_to "プロフィールの変更", edit_profile_path(current_user.id), class: "nav-link" %>
+                  <div class="under-line"></div>
+                </li>
+                <li>
+                  <%= link_to "お支払い情報の変更", create_customer_portal_path, class: "nav-link" %>
+                  <div class="under-line"></div>
+                </li>
+                <li>
+                  <%= link_to "パスワードの変更", edit_user_registration_path, class: "nav-link" %>
+                  <div class="under-line"></div>
+                </li>
+              </div>
+
+              <div class="menu-category-container">
+                <li>
+                  <div class="section-title">#カテゴリ</div>
+                </li>
+                <li>
+                  <%= link_to "撮り鉄", index_post_path(category: 1), class: "nav-link" %>
+                  <div class="under-line"></div>
+                </li>
+                <li>
+                  <%= link_to "乗り鉄", index_post_path(category: 2), class: "nav-link" %>
+                  <div class="under-line"></div>
+                </li>
+                <li>
+                  <%= link_to "模型鉄", index_post_path(category: 3), class: "nav-link" %>
+                  <div class="under-line"></div>
+                </li>
+                <li>
+                  <%= link_to "ダミー④", index_post_path(category: 3), class: "nav-link" %>
+                  <div class="under-line"></div>
+                </li>
+                <li>
+                  <%= link_to "ダミー⑤", index_post_path(category: 3), class: "nav-link" %>
+                  <div class="under-line"></div>
+                </li>
+                <li>
+                  <%= link_to "ダミー⑥", index_post_path(category: 3), class: "nav-link" %>
+                  <div class="under-line"></div>
+                </li>
+                <li>
+                  <%= link_to "ダミー⑦", index_post_path(category: 3), class: "nav-link" %>
+                  <div class="under-line"></div>
+                </li>
+                <li>
+                  <%= link_to "ダミー⑧", index_post_path(category: 3), class: "nav-link" %>
+                  <div class="under-line"></div>
+                </li>
+              </div>
+
+              <div class="menu-category-container">
+                <li>
+                  <div class="section-title">#その他</div>
+                </li>
+                <li>
+                  <%= link_to "プライバシーポリシー", policy_home_path, class: "nav-link" %>
+                  <div class="under-line"></div>
+                </li>
+                <li>
+                  <%= link_to "利用規約", terms_home_path, class: "nav-link" %>
+                  <div class="under-line"></div>
+                </li>
+                <li>
+                  <%= link_to "ログアウト", destroy_user_session_path, method: :delete, class: "nav-link" %>
+                  <div class="under-line"></div>
+                </li>
+              </div>
+            </ul>
+          <% else %>
+            <ul id="menu">
+              <div class ="menu-text-bold">
+                <% if current_user&.admin? %>
+                  <li>
+                    <%= link_to "管理者ページ", new_admin_session_path, class: "nav-link" %>
+                    <div class="under-line"></div>
+                  </li>
+                <% end %>
+                <li>
+                  <%= link_to "ホーム", index_post_path, class: "nav-link" %>
+                  <div class="under-line"></div>
+                </li>
+                <li>
+                  <%= link_to "パスワードの変更", edit_user_registration_path, class: "nav-link" %>
+                  <div class="under-line"></div>
+                </li>
+                <li>
+                  <%= link_to "プライバシーポリシー", policy_home_path, class: "nav-link" %>
+                  <div class="under-line"></div>
+                </li>
+                <li>
+                  <%= link_to "利用規約", terms_home_path, class: "nav-link" %>
+                  <div class="under-line"></div>
+                </li>
+                <li>
+                  <%= link_to "ログアウト", destroy_user_session_path, method: :delete, class: "nav-link" %>
+                  <div class="under-line"></div>
+                </li>
+              </div>
+            </ul>
+          <% end %>
+        </div>
+
+        <% profile = Profile.find_by(user_id: current_user.id) %>
+        <div class= "app-header-profile-image">
+          <% if profile %>
+            <% if profile.image.attached? %>
+              <%= link_to show_profile_path(current_user.id) do %>
+                <%= image_tag(profile.image) %>
+              <% end %>
+            <% else %>
+              <%= link_to show_profile_path(current_user.id) do %>
+                <%= image_tag 'no_image.png' %>
+              <% end %>
+            <% end %>
+          <% else %>
+            <%= image_tag 'no_image.png' %>
+          <% end %>
+        </div>
+
+        <div class="app-header-new-post-icon">
+          <%= link_to new_post_path do%>
+            <%= image_tag 'new_post_icon.png' %>
+          <% end %>
+        </div>
+
+        <div class="app-header-logo">
+          <%= link_to index_post_path do%>
+            <%= image_tag 'logo.png' %>
+          <% end %>
+        </div>
+
+        <!-- 戻るボタン
+        <div class="app-header-back-button-container">
+          <button onclick="window.history.back()">←</button>
+        </div>
+        -->
+
+      </nav>
+    <% end %>
+
+    <!-- アラートメッセージ -->
+    <% if notice %>
+      <div class="alert alert-success" role="alert">
+        <%= notice %>
+      </div>
+    <% end %>
+    <% if alert %>
+      <div class="alert alert-danger" role="alert">
+        <%= alert %>
+      </div>
+    <% end %>
+
+    <div class="bg-white text-dark">
+      <%= yield %>
+    </div>
+  </div>
+  <!-- Javascript -->
+  <script src="<%= mix('/js/app.js') %>"></script>
   </body>
 </html>

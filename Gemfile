@@ -1,10 +1,13 @@
 source "https://rubygems.org"
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
-ruby "3.2.2"
+ruby "3.3.0"
 
 # Bundle edge Rails instead: gem "rails", github: "rails/rails", branch: "main"
-gem "rails", "~> 7.0.4", ">= 7.0.4.3"
+gem 'rails', '~> 7.2', '>= 7.2.1'
+
+### 以下をコメントアウトしてdocker compose up --build後、
+### コメントアウトをはずして再度docker compose up --buildを実行。
 
 # The original asset pipeline for Rails [https://github.com/rails/sprockets-rails]
 gem "sprockets-rails"
@@ -13,7 +16,7 @@ gem "sprockets-rails"
 # gem "sqlite3", "~> 1.4"
 
 # Use the Puma web server [https://github.com/puma/puma]
-gem "puma", "~> 5.0"
+gem "puma", "~> 6.0"
 
 # Use JavaScript with ESM import maps [https://github.com/rails/importmap-rails]
 gem "importmap-rails"
@@ -48,7 +51,18 @@ gem "bootsnap", require: false
 gem 'mysql2'
 gem 'devise'
 gem 'dotenv-rails'
+gem "jquery-rails" # 追加
+gem "stripe" # 追加
+gem "kaminari" # 追加　ページネーション
 # gem 'webpacker'
+
+# 画像・動画圧縮
+gem 'redis' # 追加 Active Jobを非同期で実行するためのgem
+gem 'sidekiq' # 追加 Active Job のキューアダプター
+gem 'sidekiq-scheduler' # 追加 非同期処理を実行する時間を指定するためのgem
+gem 'streamio-ffmpeg' # 追加 FFmpeg　動画圧縮用
+gem 'mini_magick' # 追加 画像圧縮用
+gem 'active_storage_validations' # 追加
 
 # Use Active Storage variants [https://guides.rubyonrails.org/active_storage_overview.html#transforming-images]
 # gem "image_processing", "~> 1.2"

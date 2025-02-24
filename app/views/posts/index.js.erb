@@ -1,0 +1,12 @@
+// `post-list` に新しい投稿を追加
+document.querySelector(".post-list").insertAdjacentHTML("beforeend", "<%= j(render partial: 'posts/posts', locals: { posts: @posts, profiles: @profiles, comment_count: @comment_count }) %>");
+
+// 次のページがあればボタンの `data-next-page` を更新し、なければ削除
+const loadMoreButton = document.getElementById("load-more-button");
+
+<% if @posts.next_page %>
+  loadMoreButton.dataset.nextPage = "<%= @posts.next_page %>";
+<% else %>
+  loadMoreButton.remove();
+<% end %>
+

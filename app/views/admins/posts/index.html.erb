@@ -1,0 +1,25 @@
+<div class="admin-container">
+	<h2 class="h2">投稿一覧</h2>
+  <table class="admin_table">
+		<thead>
+			<tr>
+				<% Post.column_names.each do |column| %>
+					<th><%= column.humanize %></th>
+				<% end %>
+				<th>button</th>
+			</tr>
+		</thead>
+		<tbody>
+			<% @posts.each do |post| %>
+				<tr>
+					<% Post.column_names.each do |column| %>
+						<td><%= post[column] %></td>
+					<% end %>
+					<td>
+            <%= link_to '削除', destroy_admin_post_path(post), method: :delete, data: { confirm: "本当に削除しますか？" }, class: "btn btn-danger" %>
+					</td>
+				</tr>
+			<% end %>
+		</tbody>
+	</table>
+</div>

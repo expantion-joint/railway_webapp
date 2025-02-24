@@ -1,0 +1,3 @@
+<% posts.each_with_index do |post, i| %>
+  <%= render partial: "post", locals: { post: post, profile: profiles[i], comment_count: comment_count[i] } %>
+<% end %>

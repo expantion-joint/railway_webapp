@@ -1,0 +1,19 @@
+<!-- 以下、初期文
+<p>Welcome <%= @email %>!</p>
+
+<p>You can confirm your account email through the link below:</p>
+
+<p><%= link_to 'Confirm my account', confirmation_url(@resource, confirmation_token: @token) %></p>
+-->
+<p>
+このメールは、推し鉄.comのアカウントを有効化するためのものです。<br />
+以下のリンクから、アカウントを有効化してください。
+</p>
+<p><%= link_to 'アカウントを有効化する', confirmation_url(@resource, confirmation_token: @token) %></p>
+
+<p>
+----------------------------------<br />
+このメールに心あたりがない場合、どなたかがメールアドレスを誤って入力されたものと思われますので破棄してください。<br />
+このメールへの返信はできませんのでご了承ください。<br />
+----------------------------------
+</p>

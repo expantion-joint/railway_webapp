@@ -1,0 +1,18 @@
+<% if @type == "post" %>
+  document.querySelector(".post-list").insertAdjacentHTML("beforeend", "<%= j(render partial: 'profiles/posts', locals: { posts: @posts, profile: @profile, comment_count: @comment_count }) %>");
+  var loadMoreButton = document.getElementById("load-more-post-button");
+<% elsif @type == "comment" %>
+  document.querySelector(".comment-list").insertAdjacentHTML("beforeend", "<%= j(render partial: 'profiles/comments', locals: { comments: @comments, comment_user_profiles: @comment_user_profiles }) %>");
+  var loadMoreButton = document.getElementById("load-more-comment-button");
+<% end %>
+
+if (loadMoreButton) {
+  <% if (@type == "post" && @posts.next_page) || (@type == "comment" && @comments.next_page) %>
+    loadMoreButton.dataset.nextPage = "<%= @type == 'post' ? @posts.next_page : @comments.next_page %>";
+  <% else %>
+    loadMoreButton.remove();
+  <% end %>
+}
+
+
+

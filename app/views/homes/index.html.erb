@@ -1,0 +1,98 @@
+<h1 class="sr-only">推し鉄.com</h1>
+
+<main class="home-main-content">
+  <section class="hero">
+    <div class="container">
+      <div class="hero-logo">
+        <%= image_tag 'logo.png', alt: '推し鉄.com', class: 'logo-image' %>
+      </div>
+      <p class="hero-text">鉄道ファンのための情報共有と交流の場へようこそ。</p>
+      <div class="hero-buttons">
+        <a href="/users/sign_up" class="btn primary">新規登録</a>
+        <a href="/users/sign_in" class="btn secondary">ログイン</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="features fade-in" id="features">
+    <div class="container">
+      <h2 class="section-title">コミュニティの特徴</h2>
+      <div class="feature-items">
+        <div class="feature-item fade-in">
+          <h3>鉄道情報の共有</h3>
+          <p>最新の鉄道情報や深い知識を仲間と共有しよう！</p>
+        </div>
+        <div class="feature-item fade-in">
+          <h3>趣味仲間との交流</h3>
+          <p>同じ趣味を持つ人たちと楽しくつながろう！</p>
+        </div>
+        <div class="feature-item fade-in">
+          <h3>快適なコミュニティ</h3>
+          <p>広告や誹謗中傷がない場所で趣味を楽しもう！</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="plan fade-in" id="plan">
+    <div class="container">
+      <h2 class="section-title">月額プラン</h2>
+      <p class="plan-description">月額 <strong>500円</strong> で推し鉄.comを利用できます。</p>
+      <a href="/users/sign_up" class="btn primary">今すぐ加入する</a>
+    </div>
+  </section>
+
+  <section class="faq">
+    <div class="container">
+      <h2 class="section-title">よくある質問</h2>
+      <div class="faq-item">
+        <h3>いつでもキャンセルできますか？</h3>
+        <p>キャンセルされた翌月から自動的な引き落としは停止されます。</p>
+      </div>
+      <div class="faq-item">
+        <h3>無料会員が受けられるサービスはありますか？</h3>
+        <p>ありません。月額プランに加入している会員のみにサービスを提供しています。</p>
+      </div>
+      <div class="faq-item">
+        <h3>コミュニティで投稿された内容を一般公開しても良いですか？</h3>
+        <p>このコミュニティで投稿された内容は、有料会員のためにのみ提供されています。許可なく外部に共有することはご遠慮ください。</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="faq">
+    <div class="container">
+      <h2 class="section-title">プライバシーポリシー・利用規約</h2>
+      <div class="faq-buttons">
+        <a href="/homes/policy" class="btn">プライバシーポリシー</a>
+        <a href="/homes/terms" class="btn">利用規約</a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="footer">
+  <div class="container">
+    <p>&copy; 2024 推し鉄.com All Rights Reserved.</p>
+  </div>
+</footer>
+
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    const fadeIns = document.querySelectorAll(".fade-in");
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("visible");
+            observer.unobserve(entry.target); // 一度だけアニメーション
+          }
+        });
+      },
+      { threshold: 0.1 }
+    );
+
+    fadeIns.forEach((fadeIn) => observer.observe(fadeIn));
+  });
+</script>

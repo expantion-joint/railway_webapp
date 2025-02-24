@@ -5,7 +5,7 @@ Rails.application.configure do
 
   # cloud9 host
   # すべてのホストを許可していますが、この設定はCloud9上で開発する場合のみ有効にしてください
-  # config.hosts.clear
+  config.hosts.clear
 
   # In the development environment your application's code is reloaded any time
   # it changes. This slows down response time but is perfect for development
@@ -71,4 +71,21 @@ Rails.application.configure do
 
   # Uncomment if you wish to allow Action Cable access from any origin.
   # config.action_cable.disable_request_forgery_protection = true
+
+  # 追加：devise
+  config.action_mailer.default_url_options = { host: 'localhost', port: 8080 }
+
+  # 追加：Gmailの設定
+  config.action_mailer.raise_delivery_errors = true # メール送信時にエラーが発生した場合、エラーを表示
+  config.action_mailer.delivery_method = :smtp # メール送信の方法をSMTP経由に設定
+  config.action_mailer.smtp_settings = { # SMTPの設定
+    address:              'smtp.gmail.com',
+    port:                  587,
+    domain:               'gmail.com',
+    user_name:             ENV["GMAIL_USERNAME"],
+    password:              ENV["GMAIL_PASSWORD"],
+    authentication:       'plain', # 認証方式としてPLAINを使用
+    enable_starttls_auto:  true # STARTTLS（Transport Layer Security）を自動的に有効にする設定(セキュアな通信)
+  }
+
 end

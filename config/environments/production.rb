@@ -25,7 +25,7 @@ Rails.application.configure do
   config.public_file_server.enabled = ENV["RAILS_SERVE_STATIC_FILES"].present?
 
   # Compress CSS using a preprocessor.
-  # config.assets.css_compressor = :sass
+  # config.assets.css_compressor = :sass　# Laravel Mixを使用する場合、不必要
 
   # Do not fallback to assets pipeline if a precompiled asset is missed.
   config.assets.compile = false
@@ -38,7 +38,7 @@ Rails.application.configure do
   # config.action_dispatch.x_sendfile_header = "X-Accel-Redirect" # for NGINX
 
   # Store uploaded files on the local file system (see config/storage.yml for options).
-  config.active_storage.service = :local
+  config.active_storage.service = :amazon
 
   # Mount Action Cable outside main process or domain.
   # config.action_cable.mount_path = nil
@@ -46,7 +46,7 @@ Rails.application.configure do
   # config.action_cable.allowed_request_origins = [ "http://example.com", /http:\/\/example.*/ ]
 
   # Force all access to the app over SSL, use Strict-Transport-Security, and use secure cookies.
-  # config.force_ssl = true
+  config.force_ssl = true
 
   # Include generic and useful information about system operation, but avoid logging too much
   # information to avoid inadvertent exposure of personally identifiable information (PII).
@@ -60,6 +60,7 @@ Rails.application.configure do
 
   # Use a real queuing backend for Active Job (and separate queues per environment).
   # config.active_job.queue_adapter     = :resque
+  config.active_job.queue_adapter = :sidekiq
   # config.active_job.queue_name_prefix = "src_production"
 
   config.action_mailer.perform_caching = false
@@ -90,4 +91,22 @@ Rails.application.configure do
 
   # Do not dump schema after migrations.
   config.active_record.dump_schema_after_migration = false
+
+  # 追加：devise
+  # config.action_mailer.default_url_options = { host: 'https://46.51.253.104/' }
+  config.action_mailer.default_url_options = { host: 'https://booking-together.com/' }
+
+  # 追加：Gmailの設定
+  config.action_mailer.raise_delivery_errors = true # メール送信時にエラーが発生した場合、エラーを表示
+  config.action_mailer.delivery_method = :smtp # メール送信の方法をSMTP経由に設定
+  config.action_mailer.smtp_settings = { # SMTPの設定
+    address:              'smtp.gmail.com',
+    port:                  587,
+    domain:               'gmail.com',
+    user_name:             ENV["GMAIL_USERNAME"],
+    password:              ENV["GMAIL_PASSWORD"],
+    authentication:       'plain', # 認証方式としてPLAINを使用
+    enable_starttls_auto:  true # STARTTLS（Transport Layer Security）を自動的に有効にする設定(セキュアな通信)
+  }
+
 end

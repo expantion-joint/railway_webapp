@@ -11,6 +11,20 @@ module Src
     # Initialize configuration defaults for originally generated Rails version.
     config.load_defaults 7.0
 
+    # 追加
+    config.i18n.default_locale = :ja
+    config.time_zone = "Tokyo"
+    
+    # 追加 Active Job のキューアダプターを設定
+    config.active_job.queue_adapter = :sidekiq
+    Sidekiq.configure_server do |config|
+      config.redis = { url: ENV.fetch('REDIS_URL', 'redis://rails-redis-railway:6379/0') }
+    end
+    Sidekiq.configure_client do |config|
+      config.redis = { url: ENV.fetch('REDIS_URL', 'redis://rails-redis-railway:6379/0') }
+    end
+
+
     # Configuration for the application, engines, and railties goes here.
     #
     # These settings can be overridden in specific environments using the files

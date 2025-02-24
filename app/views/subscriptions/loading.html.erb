@@ -1,0 +1,29 @@
+<div class="subscription-container">
+  <div class="subscription-card">
+    <p class="description">
+      処理中です。しばらくお待ちください...
+    </p>
+  </div>
+</div>
+
+<script>
+  function checkSubscriptionStatus() {
+    console.log('---- Checking Subscription Status ----');
+    fetch('/subscription_status') // サーバーにステータス確認リクエスト
+      .then(response => response.json())
+      .then(data => {
+        if (data.status === 'customer_created') {
+          window.location.href = '/subscriptions/new'; // customer_createdの場合にnew.html.erbへリダイレクト
+        } else if (data.status === 'paid') {
+          window.location.href = '/subscriptions/checkout_success'; // paidの場合にsuccess.html.erbへリダイレクト
+        } else {
+          setTimeout(checkSubscriptionStatus, 3000); // 3秒後に再チェック
+        }
+      });
+  }
+
+  document.addEventListener("turbo:load", function() {
+    checkSubscriptionStatus();
+  });
+</script>
+
