@@ -28,6 +28,11 @@ test:
 
 production:
   <<: *default
-  database: rails
+  # database: rails
   username: <%= ENV['DB_USERNAME'] %>
   password: <%= ENV['DB_PASSWORD'] %>
+  
+  # 追加
+  database: <%= ENV["DB_NAME"] %>
+
+  
