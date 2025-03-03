@@ -6,13 +6,15 @@ class CommentMailer < ApplicationMailer
       @url = Rails.application.routes.url_helpers.new_reply_comment_url(
         post_id: comment.post_id,
         comment_id: comment.parent_comment_id,
-        host: "localhost:8080"
+        host: "oshitetsu.com"
+        # host: "localhost:8080"
       )
     else
       parent = Post.find(comment.post_id)
       @url = Rails.application.routes.url_helpers.new_comment_url(
         post_id: comment.post_id,
-        host: "localhost:8080"
+        host: "oshitetsu.com"
+        # host: "localhost:8080"
       )
     end
     @comment = comment
@@ -24,7 +26,7 @@ class CommentMailer < ApplicationMailer
     mail(
     to: @parent_user.email,
     # bcc: ENV["ACTION_MAILER_USER"],
-    from: '推し鉄.com',
+    from: ENV["MAIL_FROM"],
     subject: 'コメントが届きました'
     )
   end

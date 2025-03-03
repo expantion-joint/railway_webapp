@@ -3,6 +3,7 @@
   <head>
     <!-- title -->
     <title>推し鉄.com&nbsp;|&nbsp;鉄道ファンのためのオンラインコミュニティ</title>
+    <meta name="description" content="推し鉄.comは、サブスク型の鉄道コミュニティです。広告や誹謗中傷がない場所で、最新の鉄道情報や深い知識を仲間と共有しましょう。">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
@@ -78,38 +79,12 @@
                 <li>
                   <div class="section-title">#カテゴリ</div>
                 </li>
-                <li>
-                  <%= link_to "撮り鉄", index_post_path(category: 1), class: "nav-link" %>
-                  <div class="under-line"></div>
-                </li>
-                <li>
-                  <%= link_to "乗り鉄", index_post_path(category: 2), class: "nav-link" %>
-                  <div class="under-line"></div>
-                </li>
-                <li>
-                  <%= link_to "模型鉄", index_post_path(category: 3), class: "nav-link" %>
-                  <div class="under-line"></div>
-                </li>
-                <li>
-                  <%= link_to "ダミー④", index_post_path(category: 3), class: "nav-link" %>
-                  <div class="under-line"></div>
-                </li>
-                <li>
-                  <%= link_to "ダミー⑤", index_post_path(category: 3), class: "nav-link" %>
-                  <div class="under-line"></div>
-                </li>
-                <li>
-                  <%= link_to "ダミー⑥", index_post_path(category: 3), class: "nav-link" %>
-                  <div class="under-line"></div>
-                </li>
-                <li>
-                  <%= link_to "ダミー⑦", index_post_path(category: 3), class: "nav-link" %>
-                  <div class="under-line"></div>
-                </li>
-                <li>
-                  <%= link_to "ダミー⑧", index_post_path(category: 3), class: "nav-link" %>
-                  <div class="under-line"></div>
-                </li>
+                <% Post.categories.each do |name, id| %>
+                  <li>
+                    <%= link_to name, index_post_path(category: id), class: "nav-link" %>
+                    <div class="under-line"></div>
+                  </li>
+                <% end %>
               </div>
 
               <div class="menu-category-container">
@@ -122,6 +97,10 @@
                 </li>
                 <li>
                   <%= link_to "利用規約", terms_home_path, class: "nav-link" %>
+                  <div class="under-line"></div>
+                </li>
+                <li>
+                  <%= link_to "お問い合わせ", new_contact_path, class: "nav-link" %>
                   <div class="under-line"></div>
                 </li>
                 <li>
@@ -153,6 +132,10 @@
                 </li>
                 <li>
                   <%= link_to "利用規約", terms_home_path, class: "nav-link" %>
+                  <div class="under-line"></div>
+                </li>
+                <li>
+                  <%= link_to "お問い合わせ", new_contact_path, class: "nav-link" %>
                   <div class="under-line"></div>
                 </li>
                 <li>

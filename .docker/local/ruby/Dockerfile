@@ -20,3 +20,6 @@ WORKDIR /src
 ADD ./Gemfile /src/Gemfile
 ADD ./Gemfile.lock /src/Gemfile.lock
 RUN bundle install
+
+# アプリケーションの起動コマンド
+CMD ["sh", "-c", "rm -f tmp/pids/unicorn.pid && exec bundle exec unicorn -c config/unicorn.rb -E production"]

@@ -64,6 +64,9 @@ gem 'streamio-ffmpeg' # 追加 FFmpeg　動画圧縮用
 gem 'mini_magick' # 追加 画像圧縮用
 gem 'active_storage_validations' # 追加
 
+# 本番環境用
+gem 'unicorn'
+
 # Use Active Storage variants [https://guides.rubyonrails.org/active_storage_overview.html#transforming-images]
 # gem "image_processing", "~> 1.2"
 

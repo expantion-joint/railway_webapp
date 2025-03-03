@@ -1,4 +1,4 @@
-:concurrency: 5
+:concurrency: 1 # 並列して圧縮可能なファイル数
 :queues:
   - default
 :redis:

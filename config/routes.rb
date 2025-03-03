@@ -64,6 +64,10 @@ Rails.application.routes.draw do
   get 'subscriptions/loading', to: 'subscriptions#loading', as: 'loading_subscription'
   get '/subscription_status', to: 'subscriptions#subscription_status'
 
+  # contact
+  get 'contacts/new', to: 'contacts#new', as: 'new_contact'
+  post 'contacts/new', to: 'contacts#create', as: 'create_contact'
+
   # stripe
   post '/webhooks', to: 'webhooks#create'
   post '/checkouts', to: 'checkouts#create'

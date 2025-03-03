@@ -94,7 +94,7 @@ Rails.application.configure do
 
   # 追加：devise
   # config.action_mailer.default_url_options = { host: 'https://46.51.253.104/' }
-  config.action_mailer.default_url_options = { host: 'https://booking-together.com/' }
+  config.action_mailer.default_url_options = { host: 'https://oshitetsu.com/' }
 
   # 追加：Gmailの設定
   config.action_mailer.raise_delivery_errors = true # メール送信時にエラーが発生した場合、エラーを表示
@@ -102,7 +102,7 @@ Rails.application.configure do
   config.action_mailer.smtp_settings = { # SMTPの設定
     address:              'smtp.gmail.com',
     port:                  587,
-    domain:               'gmail.com',
+    domain:                ENV["MAIL_DOMAIN"],
     user_name:             ENV["GMAIL_USERNAME"],
     password:              ENV["GMAIL_PASSWORD"],
     authentication:       'plain', # 認証方式としてPLAINを使用
