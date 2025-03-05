@@ -5,15 +5,15 @@
 //@import 'variables';
 
 // Bootstrap
-@use '~bootstrap/scss/bootstrap';
-@use "setting/general";
-@use "hamburger-menu";
-@use "device";
-@use "posts";
-@use "comments";
-@use "profiles";
-@use "ranking";
-@use "homes";
-@use "header";
-@use "subscription";
-@use "admins";
+@import '~bootstrap/scss/bootstrap';
+@import "setting/general";
+@import "hamburger-menu";
+@import "device";
+@import "posts";
+@import "comments";
+@import "profiles";
+@import "ranking";
+@import "homes";
+@import "header";
+@import "subscription";
+@import "admins";
