@@ -9,8 +9,7 @@ services:
     tty: true
     # command: bundle exec rails s -p 3000 -b '0.0.0.0'
     command: >
-      bash -c "rm -f tmp/pids/server.pid &&
-              bundle exec rake db:migrate &&
+      bash -c "rm -f tmp/pids/unicorn.pid &&
               bundle exec unicorn -c config/unicorn.rb -E production"
     ports:
       - "3000:3000"

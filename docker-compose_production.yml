@@ -6,8 +6,7 @@ services:
       dockerfile: .docker/local/ruby/Dockerfile
     tty: true
     command: >
-      bash -c "rm -f tmp/pids/server.pid &&
-              bundle exec rake db:migrate &&
+      bash -c "rm -f tmp/pids/unicorn.pid &&
               bundle exec unicorn -c config/unicorn.rb -E production"
     ports:
       - "3000:3000"
