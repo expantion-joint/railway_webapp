@@ -28,7 +28,7 @@ Rails.application.configure do
   # config.assets.css_compressor = :sass　# Laravel Mixを使用する場合、不必要
 
   # Do not fallback to assets pipeline if a precompiled asset is missed.
-  config.assets.compile = false
+  config.assets.compile = true
 
   # Enable serving of images, stylesheets, and JavaScripts from an asset server.
   # config.asset_host = "http://assets.example.com"
@@ -95,7 +95,7 @@ Rails.application.configure do
   # 追加：devise
   # config.action_mailer.default_url_options = { host: 'https://46.51.253.104/' }
   # config.action_mailer.default_url_options = { host: 'https://oshitetsu.com/' }
-  config.action_mailer.default_url_options = { host: 'localhost', port: 3000 }
+  config.action_mailer.default_url_options = { host: 'http://35.74.213.11/' }
 
   # 追加：Gmailの設定
   config.action_mailer.raise_delivery_errors = true # メール送信時にエラーが発生した場合、エラーを表示
