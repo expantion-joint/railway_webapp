@@ -110,4 +110,7 @@ Rails.application.configure do
     enable_starttls_auto:  true # STARTTLS（Transport Layer Security）を自動的に有効にする設定(セキュアな通信)
   }
 
+  # 追加
+  config.assets.digest = true
+
 end
