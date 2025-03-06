@@ -11,6 +11,8 @@ services:
     ports:
       - "3000:3000"
     working_dir: /src
+    environment:
+      - RAILS_SERVE_STATIC_FILES=1
     volumes:
       - ./:/src
     env_file:
