@@ -39,7 +39,7 @@
 
 
 # rootパスのディレクトリを指定
-root_path = File.expand_path('/src', __FILE__)
+root_path = "/src"
 
 # アプリケーションサーバの性能を決定する
 worker_processes 2
