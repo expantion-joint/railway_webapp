@@ -21,6 +21,13 @@
       .textarea {
         width: 100%;
         margin-bottom: 5px;
+
+        .form-control {
+          width: 100%;
+          border: 1px solid lightgray;
+          border-radius: 8px;
+          padding: 10px;
+        }
       }
     }
   }
@@ -174,26 +181,23 @@
       .ReplyButton {
         display: inline-block;
         padding: 2px 10px;
-        font-size: 12px;
+        font-size: 14px;
         // font-weight: bold;
-        color: #ffffff;
-        background-color: #007BFF;
+        color: #000000;
+        background-color: #ffffff;
         border: none;
         border-radius: 8px;
-        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* ボタンの影 */
         cursor: pointer;
         text-align: center;
         text-decoration: none;
-        transition: background-color 0.3s ease, box-shadow 0.3s ease; /* なめらかなホバー効果 */
       }
       
       .ReplyButton:hover {
-        background-color: #0056b3; /* ホバー時の色変更 */
-        box-shadow: 0 6px 8px rgba(0, 0, 0, 0.2); /* ホバー時に影を強調 */
+        background-color: #e2e2e2; /* ホバー時の色変更 */
       }
       
       .ReplyButton:active {
-        background-color: #003f7f; /* クリック時の色変更 */
+        background-color: #c7c7c7; /* クリック時の色変更 */
         box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* 押し込まれた感の影 */
       }
     }
@@ -221,6 +225,14 @@
       .textarea {
         width: 100%;
         margin-bottom: 5px;
+
+        .form-control {
+          width: 100%;
+          border: 1px solid lightgray;
+          background-color: #ffffff;
+          border-radius: 8px;
+          padding: 10px;
+        }
       }
     }
   }

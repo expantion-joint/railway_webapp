@@ -1,11 +1,13 @@
-<% if Like.exists_for_user_and_post(current_user.id, post.id) %>
-  <%= link_to destroy_like_path(post), class: 'icon', method: :delete, remote: true do %>
-    <%= image_tag("empty_heart.png", alt: "Like Icon", class: 'icon') %>
-    <span class="count"><%= post.likes.count %></span>
+<div id="like_buttons_<%= post.id %>">
+  <% if Like.exists_for_user_and_post(current_user.id, post.id) %>
+    <button class="like-button" data-post-id="<%= post.id %>" data-action="unlike">
+      <%= image_tag("empty_heart.png", alt: "Like Icon", class: 'icon') %>
+      <span class="count"><%= post.likes.count %></span>
+    </button>
+  <% else %>
+    <button class="like-button" data-post-id="<%= post.id %>" data-action="like">
+      <%= image_tag("filled_heart.png", alt: "Like Icon", class: 'icon') %>
+      <span class="count"><%= post.likes.count %></span>
+    </button>
   <% end %>
-<% else %>
-  <%= link_to create_like_path(post), class: 'icon', method: :post, remote: true do %>
-    <%= image_tag("filled_heart.png", alt: "Like Icon", class: 'icon') %>
-    <span class="count"><%= post.likes.count %></span>
-  <% end %>
-<% end %>
+</div>

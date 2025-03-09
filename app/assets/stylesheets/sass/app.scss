@@ -6,6 +6,7 @@
 
 // Bootstrap
 // @import '~bootstrap/scss/bootstrap';
+@use "normalize";
 @use "setting/general";
 @use "hamburger-menu";
 @use "device";

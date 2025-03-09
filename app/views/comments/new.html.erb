@@ -45,9 +45,9 @@
     <%= form_with(url: create_comment_path(@post), model: @comment, local: true, method: :post) do |f| %>
 
       <% if @comment.errors.any? %>
-        <ul>
+        <ul class="error-messages">
           <% @comment.errors.full_messages.each do |message| %>
-            <li><%= message %></li>
+            <li>・<%= message %></li>
           <% end %> </ul>
       <% end %>
 
@@ -111,7 +111,7 @@
           <span class="count"><%= Comment.where(parent_comment_id: comment.id).count %></span>
         </a>
         <!-- 返信ボタン -->
-        <span class="ReplyButton">返信する</span>
+        <span class="ReplyButton">返信</span>
       </div>
     </div>
 
@@ -120,9 +120,9 @@
       <%= form_with(url: create_reply_comment_path(@post, comment), model: @comment, local: true, method: :post) do |f| %>
 
         <% if @comment.errors.any? %>
-          <ul>
+          <ul class="error-messages">
             <% @comment.errors.full_messages.each do |message| %>
-              <li><%= message %></li>
+              <li>・<%= message %></li>
             <% end %> </ul>
         <% end %>
 

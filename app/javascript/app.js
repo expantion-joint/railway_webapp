@@ -113,3 +113,63 @@ document.addEventListener("DOMContentLoaded", function () {
     contentElement.innerHTML = linkedText;
   });
 });
+
+// いいねボタン
+document.addEventListener("DOMContentLoaded", () => {
+  document.body.addEventListener("click", async (event) => {
+    if (!event.target.closest(".like-button")) return;
+    
+    const button = event.target.closest(".like-button");
+    const postId = button.dataset.postId;
+    const action = button.dataset.action;
+    
+    const url = `/posts/${postId}/likes`;
+    const method = action === "like" ? "POST" : "DELETE";
+
+    try {
+      const response = await fetch(url, {
+        method: method,
+        headers: {
+          "X-CSRF-Token": document.querySelector('meta[name="csrf-token"]').content,
+          "Accept": "application/json",
+          "Content-Type": "application/json",
+        },
+      });
+
+      console.log("Response:", response); // ← **レスポンスを確認**
+
+      if (!response.ok) {
+        const errorText = await response.text();
+        throw new Error(`Failed to update like: ${response.status} ${response.statusText} - ${errorText}`);
+      }
+
+      const data = await response.json();
+      console.log("Success:", data); // ← **成功時のレスポンスを確認**
+
+      // **ボタンの状態を更新**
+      button.dataset.action = data.liked ? "unlike" : "like";
+      button.innerHTML = `
+        <img src="/assets/${data.liked ? 'empty_heart.png' : 'filled_heart.png'}" alt="Like Icon" class="icon">
+        <span class="count">${data.like_count}</span>
+      `;
+      
+    } catch (error) {
+      console.error("Error:", error);
+    }
+  });
+});
+
+// アラートを数秒後に消す
+document.addEventListener("DOMContentLoaded", () => {
+  const alerts = document.querySelectorAll(".alert");
+
+  alerts.forEach((alert) => {
+    setTimeout(() => {
+      alert.classList.add("fade-out"); // 2秒後にフェードアウト＆スライド
+      setTimeout(() => {
+        alert.remove(); // 1秒後に完全削除
+      }, 1000);
+    }, 2000);
+  });
+});
+
