@@ -8,7 +8,7 @@ class Admins::ProfilesController < ApplicationController
 	def destroy
     @profile = Profile.find(params[:profile_id])
     @profile.destroy
-    redirect_to index_admin_profile_path, notice: '投稿を削除しました。'
+    redirect_to index_admin_profile_path, notice: 'プロフィールを削除しました。'
   end
 
   def media_index

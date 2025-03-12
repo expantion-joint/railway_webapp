@@ -152,6 +152,15 @@ document.addEventListener("DOMContentLoaded", () => {
         <img src="/assets/${data.liked ? 'empty_heart.png' : 'filled_heart.png'}" alt="Like Icon" class="icon">
         <span class="count">${data.like_count}</span>
       `;
+
+      // **画像のキャッシュを防ぐために、一意のパラメータを付加**
+      const timestamp = new Date().getTime();
+      const imageSrc = data.liked ? `${button.dataset.emptyHeart}?${timestamp}` : `${button.dataset.filledHeart}?${timestamp}`;
+
+      button.innerHTML = `
+        <img src="${imageSrc}" alt="Like Icon" class="icon">
+        <span class="count">${data.like_count}</span>
+      `;
       
     } catch (error) {
       console.error("Error:", error);
@@ -165,11 +174,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
   alerts.forEach((alert) => {
     setTimeout(() => {
-      alert.classList.add("fade-out"); // 2秒後にフェードアウト＆スライド
+      alert.classList.add("fade-out"); // 3秒後にフェードアウト＆スライド
       setTimeout(() => {
         alert.remove(); // 1秒後に完全削除
       }, 1000);
-    }, 2000);
+    }, 3000);
   });
 });
 
