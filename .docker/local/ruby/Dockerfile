@@ -15,10 +15,6 @@ RUN sed -i 's|http://deb.debian.org|https://deb.debian.org|g' /etc/apt/sources.l
     apt-get update && \
     apt-get install -y ffmpeg libvips
 
-# https化 Let's Encrypt 
-RUN apt-get update && \
-    apt-get install -y certbot python3-certbot-nginx cron
-
 WORKDIR /src
 
 ADD ./Gemfile /src/Gemfile
