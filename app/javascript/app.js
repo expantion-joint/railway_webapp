@@ -114,6 +114,7 @@ document.addEventListener("DOMContentLoaded", function () {
   });
 });
 
+
 // いいねボタン
 document.addEventListener("DOMContentLoaded", () => {
   document.body.addEventListener("click", async (event) => {
@@ -156,18 +157,17 @@ document.addEventListener("DOMContentLoaded", () => {
 
       console.log("New image src:", newSrc); // 画像パスを確認
 
-      // **Safari用のキャッシュクリア**
-      image.srcset = "";
-      image.src = "about:blank"; // 完全リセット
+      // **Safari で確実に再描画させる**
+      image.srcset = ""; // `srcset` のキャッシュをクリア
+      image.src = "about:blank"; // `src` を完全リセット
       setTimeout(() => {
-        fetch(newSrc, { cache: "reload" })
+        fetch(newSrc, { cache: "reload" }) // 事前に画像をリロード
           .then(() => {
-            image.src = newSrc;
-            image.style.visibility = "visible"; // 再描画
-          })
-          .catch((err) => console.error("Image preloading failed:", err));
+            image.src = newSrc; // `src` を更新
+            image.style.display = "block"; // 再表示
+            image.offsetHeight; // **リフローを強制**
+          });
       }, 50);
-      
 
       // **いいね数を更新**
       const countSpan = button.querySelector(".count");
@@ -180,6 +180,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 });
+
 
 
 // アラートを数秒後に消す
