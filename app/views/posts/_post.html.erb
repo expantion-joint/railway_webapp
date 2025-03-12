@@ -42,7 +42,7 @@
 			<% if post.media.content_type.start_with?('image/') %>
 				<%= image_tag(post.media, alt: "Posted image", class: "img") %>
 			<% elsif post.media.content_type.start_with?('video/') %>
-				<video controls class="video" preload="metadata">
+				<video controls class="video" poster="<%= url_for(post.video_thumbnail) %>">
 					<source src="<%= url_for(post.media) %>" type="<%= post.media.content_type %>">
 					お使いのブラウザは動画タグをサポートしていません。
 				</video>

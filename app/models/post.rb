@@ -38,8 +38,15 @@ class Post < ApplicationRecord
     !filename.include?('compressed')
   end
 
+  # postを削除する際、S3に保存されたmediaも削除する
   def purge_media
     media.purge if media.attached?
+  end
+
+  # 動画のサムネイルを作成（ffmpeg必要）
+  def video_thumbnail
+    return unless media.content_type.start_with?("video/")
+    media.representation(resize_to_limit: [1280, 720]).processed
   end
 
   # # 未圧縮の画像・動画を取得するメソッド
