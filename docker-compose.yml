@@ -55,6 +55,7 @@ services:
     working_dir: /src
     command: bundle exec sidekiq
     environment:
+      RAILS_ENV: production
       REDIS_URL: redis://rails-redis-railway:6379/0
   
   nginx:
