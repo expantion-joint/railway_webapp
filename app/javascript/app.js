@@ -151,24 +151,23 @@ document.addEventListener("DOMContentLoaded", () => {
       // **ボタンの状態を更新**
       button.dataset.action = data.liked ? "unlike" : "like";
 
-      // **画像のキャッシュを防ぐために、一意のパラメータを付加**
-      const timestamp = new Date().getTime();
-      const newSrc = data.liked ? `${button.dataset.emptyHeart}?${timestamp}` : `${button.dataset.filledHeart}?${timestamp}`;
-
       console.log("New image src:", newSrc); // 画像パスを確認
 
-      // **Safari で確実にスムーズに切り替え**
+      // **Safari & Chrome 両方でラグなしで画像を変更**
       image.srcset = ""; // `srcset` のキャッシュをクリア
-      image.style.opacity = "0"; // **フェードアウト**
-      setTimeout(() => {
-        fetch(newSrc, { cache: "reload" }) // **事前に画像をロード**
-          .then(() => {
-            image.src = newSrc; // `src` を更新
-            image.onload = () => {
-              image.style.opacity = "1"; // **フェードイン**
-            };
-          });
-      }, 50);
+
+      // **即座に画像を更新してラグを無くす**
+      const timestamp = new Date().getTime();
+      const newSrc = data.liked ? `${button.dataset.emptyHeart}?${timestamp}` : `${button.dataset.filledHeart}?${timestamp}`;
+      image.src = newSrc;
+      image.style.opacity = "1"; // 即座に表示（フェードインを無効化）
+
+      // **バックグラウンドで次の画像をプリロード**
+      const preloadImage = new Image();
+      preloadImage.src = newSrc;
+      preloadImage.onload = () => {
+        console.log("Preloaded:", newSrc);
+      };
 
       // **いいね数を更新**
       const countSpan = button.querySelector(".count");
