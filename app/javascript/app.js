@@ -150,7 +150,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
       // **画像のキャッシュを防ぐために、一意のパラメータを付加**
       const timestamp = new Date().getTime();
-      const newSrc = data.liked ? `${button.dataset.emptyHeart}?${timestamp}` : `${button.dataset.filledHeart}?${timestamp}`;
+      const newSrc = `${imageUrl}?${timestamp}`;
 
       console.log("New image src:", newSrc); // 画像パスを確認
 
