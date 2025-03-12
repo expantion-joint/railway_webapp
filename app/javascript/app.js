@@ -157,10 +157,17 @@ document.addEventListener("DOMContentLoaded", () => {
       console.log("New image src:", newSrc); // 画像パスを確認
 
       // **Safari用のキャッシュクリア**
-      image.src = "";
+      image.srcset = "";
+      image.src = "about:blank"; // 完全リセット
       setTimeout(() => {
-        image.src = newSrc;
+        fetch(newSrc, { cache: "reload" })
+          .then(() => {
+            image.src = newSrc;
+            image.style.visibility = "visible"; // 再描画
+          })
+          .catch((err) => console.error("Image preloading failed:", err));
       }, 50);
+      
 
       // **いいね数を更新**
       const countSpan = button.querySelector(".count");
