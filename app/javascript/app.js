@@ -157,15 +157,16 @@ document.addEventListener("DOMContentLoaded", () => {
 
       console.log("New image src:", newSrc); // 画像パスを確認
 
-      // **Safari で確実に再描画させる**
+      // **Safari で確実にスムーズに切り替え**
       image.srcset = ""; // `srcset` のキャッシュをクリア
-      image.src = "about:blank"; // `src` を完全リセット
+      image.style.opacity = "0"; // **フェードアウト**
       setTimeout(() => {
-        fetch(newSrc, { cache: "reload" }) // 事前に画像をリロード
+        fetch(newSrc, { cache: "reload" }) // **事前に画像をロード**
           .then(() => {
             image.src = newSrc; // `src` を更新
-            image.style.display = "block"; // 再表示
-            image.offsetHeight; // **リフローを強制**
+            image.onload = () => {
+              image.style.opacity = "1"; // **フェードイン**
+            };
           });
       }, 50);
 
