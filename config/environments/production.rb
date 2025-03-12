@@ -26,7 +26,7 @@ Rails.application.configure do
   config.public_file_server.enabled = false
 
   # Compress CSS using a preprocessor.
-  # config.assets.css_compressor = :sass　# Laravel Mixを使用する場合、不必要
+  # config.assets.css_compressor = :sass　# Laravel Mixを使用する場合、不要
 
   # Do not fallback to assets pipeline if a precompiled asset is missed.
   config.assets.compile = false
@@ -94,7 +94,6 @@ Rails.application.configure do
   config.active_record.dump_schema_after_migration = false
 
   # 追加：devise
-  # config.action_mailer.default_url_options = { host: 'http://35.74.213.11:3000/' }
   config.action_mailer.default_url_options = { host: 'http://oshitetsu.com/' }
 
 
