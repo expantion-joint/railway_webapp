@@ -119,11 +119,13 @@ document.addEventListener("DOMContentLoaded", function () {
 document.addEventListener("DOMContentLoaded", () => {
   document.body.addEventListener("click", async (event) => {
     if (!event.target.closest(".like-button")) return;
-    
+
     const button = event.target.closest(".like-button");
     const postId = button.dataset.postId;
     const action = button.dataset.action;
-    
+    const emptyHeart = button.dataset.emptyHeart; // fingerprint 付きURLを取得
+    const filledHeart = button.dataset.filledHeart; // fingerprint 付きURLを取得
+
     const url = `/posts/${postId}/likes`;
     const method = action === "like" ? "POST" : "DELETE";
 
@@ -137,7 +139,7 @@ document.addEventListener("DOMContentLoaded", () => {
         },
       });
 
-      console.log("Response:", response); // ← **レスポンスを確認**
+      console.log("Response:", response); // レスポンスを確認
 
       if (!response.ok) {
         const errorText = await response.text();
@@ -145,20 +147,21 @@ document.addEventListener("DOMContentLoaded", () => {
       }
 
       const data = await response.json();
-      console.log("Success:", data); // ← **成功時のレスポンスを確認**
+      console.log("Success:", data); // 成功時のレスポンスを確認
 
       // **ボタンの状態を更新**
       button.dataset.action = data.liked ? "unlike" : "like";
       button.innerHTML = `
-        <img src="/assets/${data.liked ? 'empty_heart.png' : 'filled_heart.png'}" alt="Like Icon" class="icon">
+        <img src="${data.liked ? emptyHeart : filledHeart}" alt="Like Icon" class="icon">
         <span class="count">${data.like_count}</span>
       `;
-      
+
     } catch (error) {
       console.error("Error:", error);
     }
   });
 });
+
 
 
 // アラートを数秒後に消す
