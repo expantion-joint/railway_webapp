@@ -7,6 +7,11 @@ working_directory "/src"
 # ポート番号を指定
 listen 3000, tcp_nopush: true
 
+# HTTPS でリッスンするための設定を追加
+listen 3000, tcp_nopush: true, ssl: true, 
+  cert: "/etc/letsencrypt/live/oshitetsu.com/fullchain.pem",
+  key: "/etc/letsencrypt/live/oshitetsu.com/privkey.pem"
+
 # プロセスIDの保存先を指定
 pid "/src/tmp/pids/unicorn.pid"
 
