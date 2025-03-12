@@ -4,6 +4,8 @@ services:
     build:
       context: .
       dockerfile: .docker/local/ruby/Dockerfile
+      args:
+        RAILS_ENV: production # RAILS_ENV を Dockerfile に渡す
     tty: true
     command: >
       bash -c "rm -f tmp/pids/unicorn.pid &&
