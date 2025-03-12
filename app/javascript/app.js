@@ -148,26 +148,23 @@ document.addEventListener("DOMContentLoaded", () => {
       const data = await response.json();
       console.log("Success:", data); // 成功時のレスポンスを確認
 
-      // **ボタンの状態を更新**
-      button.dataset.action = data.liked ? "unlike" : "like";
+      // **画像のキャッシュを防ぐために、一意のパラメータを付加**
+      const timestamp = new Date().getTime();
+      const newSrc = data.liked ? `${button.dataset.emptyHeart}?${timestamp}` : `${button.dataset.filledHeart}?${timestamp}`;
 
       console.log("New image src:", newSrc); // 画像パスを確認
 
-      // **Safari & Chrome 両方でラグなしで画像を変更**
+      // **Safari で確実に再描画させる**
       image.srcset = ""; // `srcset` のキャッシュをクリア
-
-      // **即座に画像を更新してラグを無くす**
-      const timestamp = new Date().getTime();
-      const newSrc = data.liked ? `${button.dataset.emptyHeart}?${timestamp}` : `${button.dataset.filledHeart}?${timestamp}`;
-      image.src = newSrc;
-      image.style.opacity = "1"; // 即座に表示（フェードインを無効化）
-
-      // **バックグラウンドで次の画像をプリロード**
-      const preloadImage = new Image();
-      preloadImage.src = newSrc;
-      preloadImage.onload = () => {
-        console.log("Preloaded:", newSrc);
-      };
+      image.src = "about:blank"; // `src` を完全リセット
+      setTimeout(() => {
+        fetch(newSrc, { cache: "reload" }) // 事前に画像をリロード
+          .then(() => {
+            image.src = newSrc; // `src` を更新
+            image.style.display = "block"; // 再表示
+            image.offsetHeight; // **リフローを強制**
+          });
+      }, 50);
 
       // **いいね数を更新**
       const countSpan = button.querySelector(".count");

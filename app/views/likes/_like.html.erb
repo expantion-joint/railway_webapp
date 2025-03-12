@@ -1,17 +1,19 @@
 <div id="like_buttons_<%= post.id %>">
-  <% liked = Like.exists_for_user_and_post(current_user.id, post.id) %>
-  <button class="like-button" data-post-id="<%= post.id %>" data-action="<%= liked ? 'unlike' : 'like' %>"
-    data-empty-heart="<%= image_path('empty_heart.png') %>"
-    data-filled-heart="<%= image_path('filled_heart.png') %>">
-    
-    <% if liked %>
+  <% if Like.exists_for_user_and_post(current_user.id, post.id) %>
+    <button class="like-button" data-post-id="<%= post.id %>" data-action="unlike"
+      data-empty-heart="<%= image_path('empty_heart.png') %>"
+      data-filled-heart="<%= image_path('filled_heart.png') %>">
       <%= image_tag image_path("empty_heart.png"), alt: "Like Icon", class: 'icon' %>
-    <% else %>
+      <span class="count"><%= post.likes.count %></span>
+    </button>
+  <% else %>
+    <button class="like-button" data-post-id="<%= post.id %>" data-action="like"
+      data-empty-heart="<%= image_path('empty_heart.png') %>"
+      data-filled-heart="<%= image_path('filled_heart.png') %>">
       <%= image_tag image_path("filled_heart.png"), alt: "Like Icon", class: 'icon' %>
-    <% end %>
-
-    <span class="count"><%= post.likes.count %></span>
-  </button>
+      <span class="count"><%= post.likes.count %></span>
+    </button>
+  <% end %>
 </div>
 
 
