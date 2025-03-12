@@ -150,11 +150,16 @@ document.addEventListener("DOMContentLoaded", () => {
       console.log("Success:", data); // 成功時のレスポンスを確認
 
       // **ボタンの状態を更新**
+      console.log("emptyHeart", emptyHeart); 
+      console.log("filledHeart", filledHeart);
+
       button.dataset.action = data.liked ? "unlike" : "like";
       button.innerHTML = `
         <img src="${data.liked ? emptyHeart : filledHeart}" alt="Like Icon" class="icon">
         <span class="count">${data.like_count}</span>
       `;
+
+      console.log("button.innerHTML", button.innerHTML);
 
     } catch (error) {
       console.error("Error:", error);
