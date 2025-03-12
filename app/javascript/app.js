@@ -118,11 +118,12 @@ document.addEventListener("DOMContentLoaded", function () {
 document.addEventListener("DOMContentLoaded", () => {
   document.body.addEventListener("click", async (event) => {
     if (!event.target.closest(".like-button")) return;
-    
+
     const button = event.target.closest(".like-button");
     const postId = button.dataset.postId;
     const action = button.dataset.action;
-    
+    const image = button.querySelector("img"); // 画像要素を取得
+
     const url = `/posts/${postId}/likes`;
     const method = action === "like" ? "POST" : "DELETE";
 
@@ -136,7 +137,7 @@ document.addEventListener("DOMContentLoaded", () => {
         },
       });
 
-      console.log("Response:", response); // ← **レスポンスを確認**
+      console.log("Response:", response); // レスポンスを確認
 
       if (!response.ok) {
         const errorText = await response.text();
@@ -144,29 +145,37 @@ document.addEventListener("DOMContentLoaded", () => {
       }
 
       const data = await response.json();
-      console.log("Success:", data); // ← **成功時のレスポンスを確認**
+      console.log("Success:", data); // 成功時のレスポンスを確認
 
       // **ボタンの状態を更新**
       button.dataset.action = data.liked ? "unlike" : "like";
-      button.innerHTML = `
-        <img src="/assets/${data.liked ? 'empty_heart.png' : 'filled_heart.png'}" alt="Like Icon" class="icon">
-        <span class="count">${data.like_count}</span>
-      `;
 
       // **画像のキャッシュを防ぐために、一意のパラメータを付加**
       const timestamp = new Date().getTime();
-      const imageSrc = data.liked ? `${button.dataset.emptyHeart}?${timestamp}` : `${button.dataset.filledHeart}?${timestamp}`;
+      const newSrc = data.liked ? `${button.dataset.emptyHeart}?${timestamp}` : `${button.dataset.filledHeart}?${timestamp}`;
 
-      button.innerHTML = `
-        <img src="${imageSrc}" alt="Like Icon" class="icon">
-        <span class="count">${data.like_count}</span>
-      `;
-      
+      console.log("New image src:", newSrc); // 画像パスを確認
+      image.src = newSrc; // **画像の src を更新**
+      image.onload = () => console.log("Image reloaded successfully"); // **ロード完了を確認**
+
+      // **画像を一時的に非表示にして、再描画**
+      image.style.display = "none";
+      setTimeout(() => {
+        image.style.display = "block";
+      }, 50);
+
+      // **いいね数を更新**
+      const countSpan = button.querySelector(".count");
+      if (countSpan) {
+        countSpan.textContent = data.like_count;
+      }
+
     } catch (error) {
       console.error("Error:", error);
     }
   });
 });
+
 
 // アラートを数秒後に消す
 document.addEventListener("DOMContentLoaded", () => {
