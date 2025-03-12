@@ -20,7 +20,7 @@
 			<% else %>
 				<%= post.created_at.strftime("%Y/%m/%d") %> <!-- 24時間以上なら日付のみ -->
 			<% end %>
-		</h2>
+		</h2> 
 		<% if post.user_id == current_user.id %>
 			<div class="dropdown">
 				<button class="dropdown-toggle">・・・</button>
@@ -42,7 +42,7 @@
 			<% if post.media.content_type.start_with?('image/') %>
 				<%= image_tag(post.media, alt: "Posted image", class: "img") %>
 			<% elsif post.media.content_type.start_with?('video/') %>
-				<video controls class="video">
+				<video controls class="video" preload="metadata">
 					<source src="<%= url_for(post.media) %>" type="<%= post.media.content_type %>">
 					お使いのブラウザは動画タグをサポートしていません。
 				</video>
