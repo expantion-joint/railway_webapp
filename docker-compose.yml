@@ -65,6 +65,7 @@ services:
       - "80:80"
     volumes:
       - ./nginx/conf.d:/etc/nginx/conf.d
+      - ./public:/var/www/railway_webapp/public 
     depends_on:
       - rails
 
