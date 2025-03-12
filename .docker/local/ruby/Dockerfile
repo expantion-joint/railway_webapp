@@ -4,10 +4,6 @@ FROM ruby:3.3.0
 #RUN curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add - && \
 #    echo "deb https://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources.list.d/yarn.list
 
-# docker-compose.yml から渡された環境変数を ENV に設定
-ARG RAILS_ENV
-ENV RAILS_ENV=${RAILS_ENV}
-
 RUN apt-get update && \
     apt-get install -y build-essential libpq-dev nodejs npm vim default-mysql-client && \
     npm install n -g && \
@@ -29,18 +25,5 @@ ADD ./Gemfile /src/Gemfile
 ADD ./Gemfile.lock /src/Gemfile.lock
 RUN bundle install
 
-# SSL設定ファイルを追加
-ADD ./scripts/setup_ssl.sh /setup_ssl.sh
-ADD ./scripts/certbot-renew.sh /certbot-renew.sh
-
-# production の場合のみ、SSL設定を追加
-RUN if [ "$RAILS_ENV" = "production" ]; then \
-    echo "SSL 証明書の設定を開始..."; \
-    chmod +x /setup_ssl.sh /certbot-renew.sh; \
-    echo "0 3 * * * root /certbot-renew.sh >> /var/log/certbot-renew.log 2>&1" > /etc/cron.d/certbot-renew; \
-    chmod 0644 /etc/cron.d/certbot-renew; \
-    crontab /etc/cron.d/certbot-renew; \
-  fi
-
 # アプリケーションの起動コマンド
-CMD ["sh", "-c", "service cron start && if [ \"$RAILS_ENV\" = \"production\" ]; then /setup_ssl.sh; fi && rm -f tmp/pids/unicorn.pid && exec bundle exec unicorn -c config/unicorn.rb -E production"]
+CMD ["sh", "-c", "service cron start && rm -f tmp/pids/unicorn.pid && exec bundle exec unicorn -c config/unicorn.rb -E production"]
