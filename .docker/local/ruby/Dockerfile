@@ -29,11 +29,13 @@ ADD ./Gemfile /src/Gemfile
 ADD ./Gemfile.lock /src/Gemfile.lock
 RUN bundle install
 
-# **production の場合のみ SSL 設定を追加**
+# SSL設定ファイルを追加
+ADD ./scripts/setup_ssl.sh /setup_ssl.sh
+ADD ./scripts/certbot-renew.sh /certbot-renew.sh
+
+# production の場合のみ、SSL設定を追加
 RUN if [ "$RAILS_ENV" = "production" ]; then \
     echo "SSL 証明書の設定を開始..."; \
-    COPY ./scripts/setup_ssl.sh /setup_ssl.sh; \
-    COPY ./scripts/certbot-renew.sh /certbot-renew.sh; \
     chmod +x /setup_ssl.sh /certbot-renew.sh; \
     echo "0 3 * * * root /certbot-renew.sh >> /var/log/certbot-renew.log 2>&1" > /etc/cron.d/certbot-renew; \
     chmod 0644 /etc/cron.d/certbot-renew; \
