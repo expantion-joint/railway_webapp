@@ -6,6 +6,6 @@ echo "🔄 Let's Encrypt 証明書の更新を開始します..."
 certbot renew --non-interactive --quiet
 
 # Nginx をリロードして新しい証明書を適用
-docker exec nginx-container nginx -s reload
+docker exec nginx_proxy nginx -s reload
 
 echo "✅ 証明書の更新が完了しました。"

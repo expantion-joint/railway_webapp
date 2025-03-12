@@ -94,7 +94,7 @@ Rails.application.configure do
   config.active_record.dump_schema_after_migration = false
 
   # 追加：devise
-  config.action_mailer.default_url_options = { host: 'http://oshitetsu.com/' }
+  config.action_mailer.default_url_options = { host: 'https://oshitetsu.com/' }
 
 
   # 追加：Gmailの設定
