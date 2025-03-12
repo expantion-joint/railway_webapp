@@ -155,13 +155,11 @@ document.addEventListener("DOMContentLoaded", () => {
       const newSrc = data.liked ? `${button.dataset.emptyHeart}?${timestamp}` : `${button.dataset.filledHeart}?${timestamp}`;
 
       console.log("New image src:", newSrc); // 画像パスを確認
-      image.src = newSrc; // **画像の src を更新**
-      image.onload = () => console.log("Image reloaded successfully"); // **ロード完了を確認**
 
-      // **画像を一時的に非表示にして、再描画**
-      image.style.display = "none";
+      // **Safari用のキャッシュクリア**
+      image.src = "";
       setTimeout(() => {
-        image.style.display = "block";
+        image.src = newSrc;
       }, 50);
 
       // **いいね数を更新**
