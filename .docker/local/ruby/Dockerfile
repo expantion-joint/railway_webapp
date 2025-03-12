@@ -21,7 +21,7 @@ RUN sed -i 's|http://deb.debian.org|https://deb.debian.org|g' /etc/apt/sources.l
 
 # https化 Let's Encrypt 
 RUN apt-get update && \
-    apt-get install -y certbot python3-certbot-nginx
+    apt-get install -y certbot python3-certbot-nginx cron
 
 WORKDIR /src
 
@@ -43,4 +43,4 @@ RUN if [ "$RAILS_ENV" = "production" ]; then \
   fi
 
 # アプリケーションの起動コマンド
-CMD ["sh", "-c", "if [ \"$RAILS_ENV\" = \"production\" ]; then /setup_ssl.sh; fi && rm -f tmp/pids/unicorn.pid && exec bundle exec unicorn -c config/unicorn.rb -E production"]
+CMD ["sh", "-c", "service cron start && if [ \"$RAILS_ENV\" = \"production\" ]; then /setup_ssl.sh; fi && rm -f tmp/pids/unicorn.pid && exec bundle exec unicorn -c config/unicorn.rb -E production"]
