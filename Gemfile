@@ -64,6 +64,7 @@ gem 'streamio-ffmpeg' # 追加 FFmpeg　動画圧縮用
 gem 'mini_magick' # 追加 画像圧縮用
 gem 'active_storage_validations' # 追加
 gem 'aws-sdk-s3' # 追加 amazonS3 本番環境用
+gem "image_processing" # 追加　動画のサムネイル作成
 
 # 本番環境用
 gem 'unicorn'
