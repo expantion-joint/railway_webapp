@@ -125,6 +125,10 @@ document.addEventListener("DOMContentLoaded", () => {
     const action = button.dataset.action;
     const image = button.querySelector("img"); // 画像要素を取得
 
+    // 画像URLをIDから取得
+    const emptyHeart = document.getElementById(`empty_heart_${postId}`).src;
+    const filledHeart = document.getElementById(`filled_heart_${postId}`).src;
+
     const url = `/posts/${postId}/likes`;
     const method = action === "like" ? "POST" : "DELETE";
 
@@ -150,7 +154,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
       // **画像のキャッシュを防ぐために、一意のパラメータを付加**
       const timestamp = new Date().getTime();
-      const newSrc = `${imageUrl}?${timestamp}`;
+      const newSrc = data.liked ? emptyHeart + `?${timestamp}` : filledHeart + `?${timestamp}`;
 
       console.log("New image src:", newSrc); // 画像パスを確認
 
@@ -158,12 +162,9 @@ document.addEventListener("DOMContentLoaded", () => {
       image.srcset = ""; // `srcset` のキャッシュをクリア
       image.src = "about:blank"; // `src` を完全リセット
       setTimeout(() => {
-        fetch(newSrc, { cache: "reload" }) // 事前に画像をリロード
-          .then(() => {
-            image.src = newSrc; // `src` を更新
-            image.style.display = "block"; // 再表示
-            image.offsetHeight; // **リフローを強制**
-          });
+        image.src = newSrc;
+        image.style.display = "block";
+        image.offsetHeight; // **リフローを強制**
       }, 50);
 
       // **いいね数を更新**
@@ -177,7 +178,6 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 });
-
 
 
 // アラートを数秒後に消す
