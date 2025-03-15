@@ -28,6 +28,10 @@ before_fork do |server, worker|
     Process.kill 'QUIT', Process.pid
   end
 
+  # 古い PID ファイルを削除
+  pidfile = "/src/tmp/pids/unicorn.pid"
+  File.delete(pidfile) if File.exist?(pidfile)
+
   defined?(ActiveRecord::Base) and
     ActiveRecord::Base.connection.disconnect!
 end
