@@ -5,7 +5,7 @@ worker_processes 2
 working_directory "/src"
 
 # ポート番号を指定
-listen 3000, tcp_nopush: true
+listen "0.0.0.0:3000", tcp_nopush: true
 
 # プロセスIDの保存先を指定
 pid "/src/tmp/pids/unicorn.pid"
