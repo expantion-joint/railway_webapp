@@ -1,0 +1,20 @@
+<div class="leaderboard">
+  <div class=leaderboard-title><%= image_tag 'trophy.png' %>先週のいいねランキング</div>
+  <p class="period">期間：<%= @start_of_last_week.strftime("%m/%d") %>~<%= @end_of_last_week.strftime("%m/%d") %></p>
+
+  <% if @recent_likes_count_weekly.present? %>
+    <div class="rankings">
+      <% @recent_likes_count_weekly.each_with_index do |(nickname, count, user_id), index| %>
+        <div class="ranking-item">
+          <span class="rank-number"><%= index + 1 %></span>
+          <%= link_to show_profile_path(user_id), class: "nickname" do %>
+            <span><%= nickname %></span>
+          <% end %>
+          <span class="like-count">+<%= count %></span>
+        </div>
+      <% end %>
+    </div>
+  <% else %>
+    <p class="no-likes">No likes in the past week.</p>
+  <% end %>
+</div>

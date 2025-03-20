@@ -1,0 +1,13 @@
+<div class="dashboard-container">
+  <h2 calss="h2">管理者ダッシュボード</h2>
+  <a href="<%= index_admin_user_path %>" class="button">ユーザー管理</a>
+  <a href="<%= index_admin_post_path %>" class="button">投稿管理</a>
+  <a href="<%= media_index_admin_post_path %>" class="button">アクティブストレージ管理/Post</a>
+  <a href="<%= media_index_admin_profile_path %>" class="button">アクティブストレージ管理/Profile</a>
+  <%= link_to "Sidekiq GUI", "/sidekiq", class: "button" %>
+  <a href="<%= index_admin_comment_path %>" class="button">コメント管理</a>
+  <a href="<%= index_admin_subscription_path %>" class="button">サブスクリプション管理</a>
+  <a href="<%= index_admin_profile_path %>" class="button">プロフィール管理</a>
+  <a href="<%= edit_admin_registration_path %>" class="button">アカウント編集</a>
+	<a href="<%= destroy_admin_session_path %>" data-method="delete" class="button">管理者ログアウト</a>
+</div>

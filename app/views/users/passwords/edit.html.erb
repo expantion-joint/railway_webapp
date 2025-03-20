@@ -1,0 +1,60 @@
+<!--　以下、初期文
+<h2>Change your password</h2>
+
+<%= form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :put }) do |f| %>
+  <%= render "users/shared/error_messages", resource: resource %>
+  <%= f.hidden_field :reset_password_token %>
+
+  <div class="field">
+    <%= f.label :password, "New password" %><br />
+    <% if @minimum_password_length %>
+      <em>(<%= @minimum_password_length %> characters minimum)</em><br />
+    <% end %>
+    <%= f.password_field :password, autofocus: true, autocomplete: "new-password" %>
+  </div>
+
+  <div class="field">
+    <%= f.label :password_confirmation, "Confirm new password" %><br />
+    <%= f.password_field :password_confirmation, autocomplete: "new-password" %>
+  </div>
+
+  <div class="actions">
+    <%= f.submit "Change my password" %>
+  </div>
+<% end %>
+
+<%= render "users/shared/links" %>
+-->
+
+<div class="device-container">
+  <div class="form-container">
+    <h3 class="h2">パスワードの変更手続き</h3>
+
+    <%= form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :put }) do |f| %>
+      <div class="gp-text-red">
+        <%= render "users/shared/error_messages", resource: resource %>
+      </div>
+      
+      <%= f.hidden_field :reset_password_token %>
+
+      <div class="field">
+        <%= f.label :新しいパスワード（大文字・小文字・数字・記号を含む8文字以上）, class: "label" %>
+        <%= f.password_field :password, autofocus: true, autocomplete: "new-password", class:"device-input-itme" %>
+      </div>
+
+      <div class="field">
+        <%= f.label :password_confirmation, class: "label" %>
+        <%= f.password_field :password_confirmation, autocomplete: "new-password", class:"device-input-itme" %>
+      </div>
+
+      <div class="actions">
+        <%= f.submit "パスワードを変更する" %>
+      </div>
+    
+      <div class="link-container">
+        <%= render "users/shared/links" %>
+      </div>
+    <% end %>
+  </div>
+</div>
+

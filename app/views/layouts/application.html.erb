@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <!-- title -->
+    <title>推し鉄.com&nbsp;|&nbsp;鉄道ファンのためのオンラインコミュニティ</title>
+    <meta name="description" content="推し鉄.comは、サブスク型の鉄道コミュニティです。広告や誹謗中傷がない場所で、最新の鉄道情報や深い知識を仲間と共有しましょう。">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+    <!-- Style -->
+    <link rel="stylesheet" href="<%= mix('/css/app.css') %>">
+    <!-- Javascript -->
+    <!-- turbo.js -->
+    <script src="<%= mix('/js/turbo.js') %>"></script>
+    <!-- stripe -->
+    <script src="https://js.stripe.com/v3"></script>
+    <!-- ファビコン -->
+    <%= favicon_link_tag('favicon.ico') %>
+  </head>
+
+  <body>
+    <% if user_signed_in? %>
+      <div class="main-container">
+      <!--  ナビゲーションバー -->
+      <nav class="custom-navbar">
+        <div id="menuToggle">
+          <input type="checkbox" />
+          <span></span>
+          <span></span>
+          <span></span>
+          <div class=app-header-menu>menu</div>
+          <% if @subscription.stripe_payment_status == "paid" %>
+            <ul id="menu">
+              <div class ="menu-text-bold">
+                <% if current_user&.admin? %>
+                  <li>
+                    <%= link_to "管理者ページ", new_admin_session_path, class: "nav-link" %>
+                    <div class="under-line"></div>
+                  </li>
+                <% end %>
+                <li>
+                  <%= link_to "ホーム", index_post_path, class: "nav-link" %>
+                  <div class="under-line"></div>
+                </li>
+                <li>
+                  <%= link_to "マイページ", show_profile_path(current_user.id), class: "nav-link" %>
+                  <div class="under-line"></div>
+                </li>
+                <li>
+                  <%= link_to "新規投稿", new_post_path, class: "nav-link" %>
+                  <div class="under-line"></div>
+                </li>
+                <li>
+                  <%= link_to "いいねランキング", show_like_path, class: "nav-link" %>
+                  <div class="under-line"></div>
+                </li>
+              </div>
+
+              <li>
+                <div class="menu-subtitle">#設定</div>
+              </li>
+              <li>
+                <%= link_to "プロフィールの変更", edit_profile_path(current_user.id), class: "nav-link" %>
+                <div class="under-line"></div>
+              </li>
+              <li>
+                <%= link_to "お支払い情報の変更", create_customer_portal_path, class: "nav-link" %>
+                <div class="under-line"></div>
+              </li>
+              <li>
+                <%= link_to "パスワードの変更", edit_user_registration_path, class: "nav-link" %>
+                <div class="under-line"></div>
+              </li>
+              <li>
+                <div class="menu-subtitle">#カテゴリ</div>
+              </li>
+              <% Post.categories.each do |name, id| %>
+                <li>
+                  <%= link_to name, index_post_path(category: id), class: "nav-link" %>
+                  <div class="under-line"></div>
+                </li>
+              <% end %>
+              <li>
+                <div class="menu-subtitle">#その他</div>
+              </li>
+              <li>
+                <%= link_to "プライバシーポリシー", policy_home_path, class: "nav-link" %>
+                <div class="under-line"></div>
+              </li>
+              <li>
+                <%= link_to "利用規約", terms_home_path, class: "nav-link" %>
+                <div class="under-line"></div>
+              </li>
+              <li>
+                <%= link_to "お問い合わせ", new_contact_path, class: "nav-link" %>
+                <div class="under-line"></div>
+              </li>
+              <li>
+                <%= link_to "ログアウト", destroy_user_session_path, method: :delete, class: "nav-link" %>
+                <div class="under-line"></div>
+              </li>
+            </ul>
+          <% else %>
+            <ul id="menu">
+              <div class ="menu-text-bold">
+                <% if current_user&.admin? %>
+                  <li>
+                    <%= link_to "管理者ページ", new_admin_session_path, class: "nav-link" %>
+                    <div class="under-line"></div>
+                  </li>
+                <% end %>
+                <li>
+                  <%= link_to "ホーム", index_post_path, class: "nav-link" %>
+                  <div class="under-line"></div>
+                </li>
+                <li>
+                  <%= link_to "パスワードの変更", edit_user_registration_path, class: "nav-link" %>
+                  <div class="under-line"></div>
+                </li>
+                <li>
+                  <%= link_to "プライバシーポリシー", policy_home_path, class: "nav-link" %>
+                  <div class="under-line"></div>
+                </li>
+                <li>
+                  <%= link_to "利用規約", terms_home_path, class: "nav-link" %>
+                  <div class="under-line"></div>
+                </li>
+                <li>
+                  <%= link_to "お問い合わせ", new_contact_path, class: "nav-link" %>
+                  <div class="under-line"></div>
+                </li>
+                <li>
+                  <%= link_to "ログアウト", destroy_user_session_path, method: :delete, class: "nav-link" %>
+                  <div class="under-line"></div>
+                </li>
+              </div>
+            </ul>
+          <% end %>
+        </div>
+
+        <% profile = Profile.find_by(user_id: current_user.id) %>
+        <div class= "app-header-profile-image">
+          <% if profile %>
+            <% if profile.image.attached? %>
+              <%= link_to show_profile_path(current_user.id) do %>
+                <%= image_tag(profile.image) %>
+              <% end %>
+            <% else %>
+              <%= link_to show_profile_path(current_user.id) do %>
+                <%= image_tag 'no_image.png' %>
+              <% end %>
+            <% end %>
+          <% else %>
+            <%= image_tag 'no_image.png' %>
+          <% end %>
+        </div>
+
+        <div class="app-header-new-post-icon">
+          <%= link_to new_post_path do%>
+            <%= image_tag 'new_post_icon.png' %>
+          <% end %>
+        </div>
+
+        <div class="app-header-logo">
+          <%= link_to index_post_path do%>
+            <%= image_tag 'logo.png' %>
+          <% end %>
+        </div>
+
+        <!-- 戻るボタン
+        <div class="app-header-back-button-container">
+          <button onclick="window.history.back()">←</button>
+        </div>
+        -->
+
+      </nav>
+    <% end %>
+
+    <!-- アラートメッセージ -->
+    <% if flash.any? %>
+      <div class="flash-messages">
+        <% flash.each do |type, message| %>
+          <% alert_class = case type.to_sym
+              when :notice then "alert-success"
+              when :alert then "alert-error"
+              when :warning then "alert-warning"
+              when :info then "alert-info"
+              else "alert-info"
+            end %>
+          <div class="alert <%= alert_class %>">
+            <%= message %>
+            <button class="close-btn" onclick="this.parentElement.style.display='none'">&times;</button>
+          </div>
+        <% end %>
+      </div>
+    <% end %>
+
+    <div class="bg-white text-dark">
+      <%= yield %>
+    </div>
+  </div>
+  <!-- Javascript -->
+  <script src="<%= mix('/js/app.js') %>"></script>
+  </body>
+</html>

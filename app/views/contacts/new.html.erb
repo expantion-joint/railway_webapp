@@ -1,0 +1,28 @@
+<div class="post-container">
+  <div class="post-form-container">
+    <h2 class="h2">お問い合わせ</h2>
+    
+    <%= form_with(url: create_contact_path, local: true, method: :post, html: { class: 'post-form' } ) do |f| %>
+
+      <div class="form-group">
+        <%= f.label :email, "あなたのメールアドレス", class: 'form-label' %>
+        <%= f.text_field :email, class: 'form-control' %>
+      </div>
+
+      <div class="form-group">
+        <%= f.label :subject, "件名", class: 'form-label' %>
+        <%= f.text_field :subject, class: 'form-control' %>
+      </div>
+
+      <div class="form-group">
+        <%= f.label :message, "お問い合わせ内容",  class: 'form-label' %>
+        <%= f.text_area :message, class: 'form-text-area' %>
+      </div>
+
+      <div class="button-group">
+        <%= f.submit '送信する', class: 'btn btn-primary' %>
+      </div>
+    
+    <% end %>
+  </div>
+</div>

@@ -1,0 +1,28 @@
+<div class="admin-container">
+	<h2 class="h2">ユーザー一覧</h2>
+  <table class="admin_table">
+		<thead>
+			<tr>
+				<% User.column_names.each do |column| %>
+					<th><%= column.humanize %></th>
+				<% end %>
+				<th>button</th>
+			</tr>
+		</thead>
+		<tbody>
+			<% @users.each do |user| %>
+				<tr>
+					<% User.column_names.each do |column| %>
+						<td><%= user[column] %></td>
+					<% end %>
+					<td>
+						<%= link_to '編集', edit_admin_user_path(user), class: "btn btn-primary" %>
+						<% if user != current_user %>
+              <%= link_to '削除', destroy_admin_user_path(user), method: :delete, data: { confirm: "本当に削除しますか？" }, class: "btn btn-danger" %>
+            <% end %>
+					</td>
+				</tr>
+			<% end %>
+		</tbody>
+	</table>
+</div>

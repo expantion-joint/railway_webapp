@@ -1,0 +1,72 @@
+version: "3.8"
+
+services:
+  rails:
+    container_name: rails-railway
+    build:
+      context: .
+      dockerfile: .docker/local/ruby/Dockerfile
+      args:
+        RAILS_ENV: development # RAILS_ENV を Dockerfile に渡す
+    tty: true
+    command: bundle exec rails s -p 3000 -b '0.0.0.0'
+    ports:
+      - "8080:3000"
+    working_dir: /src
+    volumes:
+      - ./:/src
+    environment:
+      RAILS_ENV: development
+      DB_USERNAME: user
+      DB_PASSWORD: password
+      DB_HOST: mysql
+      DB_PORT: 3306
+    depends_on:
+      - redis
+      - mysql
+      
+  mysql:
+    container_name: rails-mysql-railway
+    build: .docker/local/mysql
+    ports:
+      - "3306:3306"
+    volumes:
+      - "./storage/mysql:/var/lib/mysql"
+    environment:
+      MYSQL_DATABASE: rails
+      MYSQL_USER: user
+      MYSQL_PASSWORD: password
+      MYSQL_ROOT_PASSWORD: password
+
+  redis:
+    image: redis:latest
+    container_name: rails-redis-railway
+    restart: always
+    ports:
+      - "6379:6379"
+
+  sidekiq:
+    build:
+      context: .
+      dockerfile: .docker/local/ruby/Dockerfile
+    container_name: rails-sidekiq-railway
+    depends_on:
+      - redis
+      - rails
+    volumes:
+      - ./:/src
+    working_dir: /src
+    command: bundle exec sidekiq
+    environment:
+      REDIS_URL: redis://rails-redis-railway:6379/0
+
+
+  # stripe_cli:
+  #   image: stripe/stripe-cli:latest
+  #   container_name: stripe-cli-railway
+  #   command: listen --api-key $STRIPE_SECRET_KEY --forward-to rails:3000/webhooks
+  #   ports:
+  #     - "4242:4242"
+  #   env_file:
+  #     - .env
+

@@ -1,0 +1,65 @@
+<div class="post">
+
+	<div class="header">
+		<div class="header_image">
+			<% if @profile.image.attached? %>
+				<%= link_to show_profile_path(@profile.user_id) do %>
+					<%= image_tag(@profile.image) %>
+				<% end %>
+			<% else %>
+				<%= link_to show_profile_path(@profile.user_id) do %>
+					<%= image_tag 'no_image.png' %>
+				<% end %>
+			<% end %>
+		</div>
+		<h2 class="username"><%= @profile.nickname %></h2>
+		<h2 class="category"><%= post.category %></h2>
+		<h2 class="timestamp">
+			<% if Time.current - post.created_at < 24.hours %>
+				<%= post.created_at.strftime("%H:%M") %> <!-- 24時間未満なら時間のみ -->
+			<% else %>
+				<%= post.created_at.strftime("%Y/%m/%d") %> <!-- 24時間以上なら日付のみ -->
+			<% end %>
+		</h2>
+		<% if post.user_id == current_user.id %>
+			<div class="dropdown">
+				<button class="dropdown-toggle">・・・</button>
+				<div class="dropdown-menu">
+					<%= link_to "編集", edit_post_path(post), class: "dropdown-item" %>
+					<%= link_to "削除", destroy_post_path(post), method: :delete, class: "dropdown-item", data: { confirm: "本当に削除しますか？" } %>
+				</div>
+			</div>
+		<% end %>
+	</div>
+
+	<h2 class="title"><%= post.title %></h2>
+	<div class="body">
+		<p class="content auto-change-url"><%= post.body %></p>
+	</div>
+	
+	<div class="media">
+		<% if post.media.attached? %>
+			<% if post.media.content_type.start_with?('image/') %>
+				<%= image_tag(post.media, alt: "Posted image", class: "img") %>
+			<% elsif post.media.content_type.start_with?('video/') %>
+				<video controls class="video" poster="<%= url_for(post.video_thumbnail) %>">
+					<source src="<%= url_for(post.media) %>" type="<%= post.media.content_type %>">
+					お使いのブラウザは動画タグをサポートしていません。
+				</video>
+			<% end %>
+		<% end %>
+	</div>
+	
+	<div class="post-footer">
+		<!-- いいねボタン -->
+		<div id="like_buttons_<%= post.id %>">
+			<%= render "likes/like", post: post %>
+		</div>
+		<!-- コメントボタン -->
+		<a href="<%= new_comment_path(post) %>", class="icon">
+			<%= image_tag("comment.png", alt: "Comment Icon", class: "icon") %>
+			<span class="count" ><%= comment_count %></span>
+		</a>
+	</div>
+
+</div>

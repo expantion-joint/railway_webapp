@@ -1,0 +1,70 @@
+<div class="profile-container">
+  <div class="profile-form-container">
+    <h2 class="h2">プロフィールを編集してください</h2>
+    
+    <%= form_with(url: update_profile_path(@profile.user_id), model: @profile, local: true, method: :post, html: { class: 'profile-form', multipart: true } ) do |f| %>
+
+      <% if @profile.errors.any? %>
+        <ul class="error-messages">
+          <% @profile.errors.full_messages.each do |message| %>
+            <li>・<%= message %></li>
+          <% end %> </ul>
+      <% end %>
+
+      <div class="form-group">
+        <%= f.label :last_name, class: 'form-label' %>
+        <%= f.text_field :last_name, value: @profile.last_name, class: 'form-control-narrow-width' %>
+      </div>
+
+      <div class="form-group">
+        <%= f.label :first_name, class: 'form-label' %>
+        <%= f.text_field :first_name, value: @profile.first_name, class: 'form-control-narrow-width' %>
+      </div>
+
+      <div class="form-group">
+        <%= f.label :nickname, class: 'form-label' %>
+        <%= f.text_field :nickname, value: @profile.nickname, class: 'form-control-narrow-width' %>
+      </div>
+
+      <div class="form-group">
+        <%= f.label :gender, class: 'form-label'  %>
+        <%= f.select :gender, options_for_select(Profile.genders.keys.map { |k| [k.humanize, k] }, @profile.gender), {include_blank: "選択して下さい"}, {class: "form-control-narrow-width"} %>
+      </div>
+
+      <div class="form-group">
+        <%= f.label :birthday, class: 'form-label' %>
+        <div class="form-group-side-by-side">
+          <%= f.date_select :birthday, {start_year: (Time.now.year - 100), end_year: (Time.now.year)}, {class: "form-control"} %>
+        </div>  
+      </div>
+
+      <div class="form-group">
+        <%= f.label :self_introduction, class: 'form-label' %>
+        <%= f.text_area :self_introduction, value: @profile.self_introduction, class: 'form-text-area' %>
+      </div>
+
+      <div class="form-group">
+        <%= f.label :self_introduction_url, 'あなたのホームページやSNSなどのURLを入力してください（任意）', class: 'form-label' %>
+        <%= f.text_field :self_introduction_url, value: @profile.self_introduction_url, class: 'form-control' %>
+      </div>
+
+      <div class="form-group image-upload">
+        <%= f.label :image, "画像（アスペクト比１:１推奨）", class: 'form-label' %>
+          <div class="image-preview" id="imagePreview">
+            <% if @profile.image.attached? %>
+              <img src="<%= url_for(@profile.image) %>" alt="Image Preview" class="image-preview__image -block">
+            <% else %>
+              <img src="" alt="Image Preview" class="image-preview__image" style="display: none;">
+              <span class="image-preview__default-text">Image will be displayed here</span>
+            <% end %>
+          </div>
+        <%= f.file_field :image, class: 'form-control-file', id: 'imageUpload' %>
+      </div>
+
+      <div class="button-group">
+        <%= f.submit '更新する', class: 'btn btn-primary' %>
+      </div>
+    
+    <% end %>
+  </div>
+</div>

@@ -1,0 +1,46 @@
+<!--　以下、初期文
+<h2>Forgot your password?</h2>
+
+<%= form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :post }) do |f| %>
+  <%= render "users/shared/error_messages", resource: resource %>
+
+  <div class="field">
+    <%= f.label :email %><br />
+    <%= f.email_field :email, autofocus: true, autocomplete: "email" %>
+  </div>
+
+  <div class="actions">
+    <%= f.submit "Send me reset password instructions" %>
+  </div>
+<% end %>
+
+<%= render "users/shared/links" %>
+-->
+
+<div class="device-container">
+  <div class="form-container">
+    <h3 class="h2">パスワードの変更手続き</h3>
+
+    <%= form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :post }) do |f| %>
+      <div class="gp-text-red">
+        <%= render "users/shared/error_messages", resource: resource %>
+      </div>
+
+      <p class="gp-text-bold">パスワードを忘れたアカウントのメールアドレスを入力してください</p>
+
+      <div class="field">
+        <%= f.label :メールアドレス, class: "label" %>
+        <%= f.email_field :email, autofocus: true, autocomplete: "email", class:"device-input-itme"  %>
+      </div>
+
+      <div class="actions">
+        <%= f.submit "メールを送信する" %>
+      </div>
+  
+    <% end %>
+    
+    <div class="link-container">
+      <%= render "users/shared/links" %>
+    </div>
+  </div>
+</div>

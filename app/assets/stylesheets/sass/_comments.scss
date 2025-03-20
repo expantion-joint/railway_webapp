@@ -1,0 +1,357 @@
+.comment-form-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-left: 10px;
+  margin-right: 10px;
+
+  .comment {
+    width: 100%;
+    max-width: 600px;
+    color: #000;
+    text-decoration: none;
+    margin-bottom: 20px;
+
+    .form {
+      display: flex;
+      align-items: flex-end;
+      flex-direction: column;
+      column-gap: 8px;
+
+      .textarea {
+        width: 100%;
+        margin-bottom: 5px;
+
+        .form-control {
+          width: 100%;
+          border: 1px solid lightgray;
+          border-radius: 8px;
+          padding: 10px;
+        }
+      }
+    }
+  }
+}
+
+.comment-list {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-left: 10px;
+  margin-right: 10px;
+  margin-bottom: 10px;
+  row-gap: 6px;
+
+  .comment {
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    padding: 16px 20px;
+    width: 100%;
+    max-width: 600px;
+    color: #000;
+    text-decoration: none;
+    position: relative;
+
+    .header {
+      display: flex;
+      align-items: center;
+
+      .username {
+        margin: 0;
+        font-size: 16px;
+        margin-right: 10px;
+        max-width: 200px;
+        white-space: nowrap;     /* テキストの折り返しを禁止 */
+        overflow: hidden;        /* はみ出した部分を隠す */
+        text-overflow: ellipsis; /* はみ出した部分を省略記号で表示 */
+      }
+
+      .timestamp {
+        margin: 0;
+        color: #777;
+        font-size: 16px;
+      }
+
+      .category {
+        margin: 0;
+        font-size: 16px;
+        font-weight: bold;
+        margin-right: 10px;
+      }
+
+      img {
+        width: 40px;
+        height: 40px;
+        border-radius: 100%;
+        margin-right: 10px;
+      }
+    }
+
+    .dropdown {
+      position: absolute;
+      top: 20px;
+      right: 25px;
+
+      .dropdown-toggle {
+        appearance: none;
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        background: none;
+        border: none;
+        font-size: 18px;
+        font-weight: bold;
+        cursor: pointer;
+        color: #666;
+        padding: 0;
+        letter-spacing: -8px;
+      
+        &::before,
+        &::after {
+          content: none !important;
+        }
+      }
+
+      .dropdown-menu {
+        display: none;
+        position: absolute;
+        top: 100%;
+        right: 0;
+        background-color: white;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        border-radius: 4px;
+        z-index: 1000;
+        width: 60px;
+
+        .dropdown-item {
+          display: block;
+          padding: 8px 12px;
+          font-size: 14px;
+          color: #333;
+          text-decoration: none;
+          transition: background-color 0.2s;
+        }
+      }
+    }
+
+    .body {
+      display: grid;
+      column-gap: 8px;
+      margin-left: 50px;
+
+      .content {
+        margin: 0;
+        font-size: 14px;
+        white-space: pre-line; /* 改行を反映させる */
+      }
+
+      .timestamp {
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
+        margin: 0;
+        color: #777;
+        font-size: 12px;
+      }
+    }
+
+    .comment-footer {
+      display: flex;
+      align-items: center;
+      margin-top: 10px;
+      margin-left: 50px;
+
+      .icon {
+        display: flex;
+        align-items: center;
+        margin-right: 20px;
+        height: 20px;
+        width: auto;
+        text-decoration: none;
+        color: #505050;
+      }
+
+      .count {
+        font-size: 16px;
+        margin-left: -10px;
+        text-decoration: none;
+        color: #505050;
+      }
+
+      .ReplyButton {
+        display: inline-block;
+        padding: 2px 10px;
+        font-size: 14px;
+        // font-weight: bold;
+        color: #000000;
+        background-color: #ffffff;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        text-align: center;
+        text-decoration: none;
+      }
+      
+      .ReplyButton:hover {
+        background-color: #e2e2e2; /* ホバー時の色変更 */
+      }
+      
+      .ReplyButton:active {
+        background-color: #c7c7c7; /* クリック時の色変更 */
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* 押し込まれた感の影 */
+      }
+    }
+  }
+
+  .comment-reply-form-container {
+    // border: 1px solid #ddd;
+    border-radius: 5px;
+    padding: 16px 20px;
+    width: 100%;
+    max-width: 600px;
+    color: #000;
+    background-color: #f5f5f5;
+    text-decoration: none;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  
+    .form {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      column-gap: 8px;
+
+      .textarea {
+        width: 100%;
+        margin-bottom: 5px;
+
+        .form-control {
+          width: 100%;
+          border: 1px solid lightgray;
+          background-color: #ffffff;
+          border-radius: 8px;
+          padding: 10px;
+        }
+      }
+    }
+  }
+
+  .comment-reply {
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    padding: 16px 20px;
+    width: calc(100% - 20px);
+    max-width: 580px;
+    color: #000;
+    text-decoration: none;
+    margin-left: 20px;
+
+    .header {
+      display: flex;
+      align-items: center;
+      margin-bottom: 10px;
+
+      .username {
+        margin: 0;
+        font-size: 16px;
+        margin-right: 10px;
+        max-width: 200px;
+        white-space: nowrap;     /* テキストの折り返しを禁止 */
+        overflow: hidden;        /* はみ出した部分を隠す */
+        text-overflow: ellipsis; /* はみ出した部分を省略記号で表示 */
+      }
+
+      .timestamp {
+        margin: 0;
+        color: #777;
+        font-size: 16px;
+      }
+
+      .category {
+        margin: 0;
+        font-size: 16px;
+        font-weight: bold;
+        margin-right: 10px;
+      }
+
+      img {
+        width: 100%;
+        max-width: 40px;
+        border-radius: 100%;
+        margin-right: 10px;
+        height: auto;
+      }
+    }
+
+    .dropdown {
+      position: absolute;
+      top: 20px;
+      right: 25px;
+
+      .dropdown-toggle {
+        appearance: none;
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        background: none;
+        border: none;
+        font-size: 18px;
+        font-weight: bold;
+        cursor: pointer;
+        color: #666;
+        padding: 0;
+        letter-spacing: -8px;
+      
+        &::before,
+        &::after {
+          content: none !important;
+        }
+      }
+    }
+
+    .body {
+      display: grid;
+      column-gap: 8px;
+      margin-left: 50px;
+
+      .content {
+        margin: 0;
+        font-size: 14px;
+        white-space: pre-line; /* 改行を反映させる */
+
+      }
+
+      .timestamp {
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
+        margin: 0;
+        color: #777;
+        font-size: 12px;
+      }
+    }
+
+    .comment-footer {
+      display: flex;
+      align-items: center;
+      margin-top: 10px;
+      margin-left: 50px;
+
+      .icon {
+        display: flex;
+        align-items: center;
+        margin-right: 20px;
+        height: 20px;
+        width: auto;
+        text-decoration: none;
+        color: #505050;
+      }
+
+      .count {
+        font-size: 16px;
+        margin-left: -10px;
+        text-decoration: none;
+        color: #505050;
+      }
+    }
+  }
+}

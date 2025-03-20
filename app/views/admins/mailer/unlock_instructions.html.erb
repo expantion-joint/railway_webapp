@@ -1,0 +1,26 @@
+<!--
+<p>Hello <%= @resource.email %>!</p>
+
+<p>Your account has been locked due to an excessive number of unsuccessful sign in attempts.</p>
+
+<p>Click the link below to unlock your account:</p>
+
+<p><%= link_to 'Unlock my account', unlock_url(@resource, unlock_token: @token) %></p>
+-->
+
+<p><%= @resource.email %> 様</p>
+
+<p>
+このメールは、推し鉄.comのアカウントロックを解除するためのものです。<br />
+以下のリンクをクリックして解除して下さい。
+</p>
+
+<p><%= link_to 'アカウントロックを解除する', unlock_url(@resource, unlock_token: @token) %></p>
+
+<p>
+----------------------------------<br />
+このメールに心あたりがない場合、どなたかがメールアドレスを誤って入力されたものと思われますので破棄してください。<br />
+このメールへの返信はできませんのでご了承ください。<br />
+----------------------------------
+</p>
+

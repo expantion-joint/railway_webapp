@@ -1,0 +1,3 @@
+<% like_posts.each_with_index do |like_post, i| %>
+  <%= render partial: "like_post", locals: { like_post: like_post, like_post_user_profile: like_post_user_profiles[i], like_posts_comment_count: like_posts_comment_count[i] } %>
+<% end %>

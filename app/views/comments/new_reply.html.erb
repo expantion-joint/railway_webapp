@@ -1,0 +1,186 @@
+<div class="post-list">
+  <div class="post">
+    <div class="header">
+      <div class="header_image">
+        <% if @profile.image.attached? %>
+          <%= link_to show_profile_path(@profile.user_id) do %>
+            <%= image_tag(@profile.image) %>
+          <% end %>
+        <% else %>
+          <%= link_to show_profile_path(@profile.user_id) do %>
+            <%= image_tag 'no_image.png' %>
+          <% end %>
+        <% end %>
+      </div>
+      <h2 class="username"><%= @profile.nickname %></h2>
+      <h2 class="category"><%= @post.category %></h2>
+      <h2 class="timestamp">
+        <% if Time.current - @post.created_at < 24.hours %>
+          <%= @post.created_at.strftime("%H:%M") %> <!-- 24時間未満なら時間のみ -->
+        <% else %>
+          <%= @post.created_at.strftime("%Y/%m/%d") %> <!-- 24時間以上なら日付のみ -->
+        <% end %>
+      </h2>
+    </div>
+    <div class="body">
+      <p class="content auto-change-url"><%= @post.body %></p>
+    </div>
+    <div class="media">
+      <% if @post.media.attached? %>
+        <% if @post.media.content_type.start_with?('image/') %>
+          <%= image_tag(@post.media, alt: "Posted image", class: "img") %>
+        <% elsif @post.media.content_type.start_with?('video/') %>
+          <video controls class="video" poster="<%= url_for(@post.video_thumbnail) %>">
+            <source src="<%= url_for(@post.media) %>" type="<%= @post.media.content_type %>">
+            お使いのブラウザは動画タグをサポートしていません。
+          </video>
+        <% end %>
+      <% end %>
+    </div>
+  </div>
+</div>
+
+<div class="comment-list">
+  <% @past_comments.each do |comment| %>
+    <% comment_user_profile = Profile.find_by(user_id: comment.user_id) %>
+    <div class="comment">
+
+      <div class="header">
+        <div class="header_image">
+          <% if comment_user_profile.image.attached? %>
+            <%= link_to show_profile_path(comment_user_profile.user_id) do %>
+              <%= image_tag(comment_user_profile.image) %>
+            <% end %>
+          <% else %>
+            <%= link_to show_profile_path(comment_user_profile.user_id) do %>
+              <%= image_tag 'no_image.png' %>
+            <% end %>
+          <% end %>
+        </div>
+        <h2 class="username"><%= comment_user_profile.nickname %></h2>
+        <h2 class="timestamp">
+          <% if Time.current - comment.created_at < 24.hours %>
+            <%= comment.created_at.strftime("%H:%M") %> <!-- 24時間未満なら時間のみ -->
+          <% else %>
+            <%= comment.created_at.strftime("%Y/%m/%d") %> <!-- 24時間以上なら日付のみ -->
+          <% end %>
+        </h2>
+        <% if comment.user_id == current_user.id %>
+          <div class="dropdown">
+            <button class="dropdown-toggle">・・・</button>
+            <div class="dropdown-menu">
+              <%= link_to "削除", destroy_comment_path(comment), method: :delete, class: "dropdown-item", data: { confirm: "本当に削除しますか？" } %>
+            </div>
+          </div>
+        <% end %>
+      </div>
+      
+      <div class="body">
+        <p class="content auto-change-url"><%= comment.content %></p>
+      </div>
+
+    </div>
+  <% end %>
+
+  <% @comments.each do |comment| %>
+    <% comment_user_profile = Profile.find_by(user_id: comment.user_id) %>
+    <div class="comment">
+
+      <div class="header">
+        <div class="header_image">
+          <% if comment_user_profile.image.attached? %>
+            <%= link_to show_profile_path(comment_user_profile.user_id) do %>
+              <%= image_tag(comment_user_profile.image) %>
+            <% end %>
+          <% else %>
+            <%= link_to show_profile_path(comment_user_profile.user_id) do %>
+              <%= image_tag 'no_image.png' %>
+            <% end %>
+          <% end %>
+        </div>
+        <h2 class="username"><%= comment_user_profile.nickname %></h2>
+        <h2 class="timestamp">
+          <% if Time.current - comment.created_at < 24.hours %>
+            <%= comment.created_at.strftime("%H:%M") %> <!-- 24時間未満なら時間のみ -->
+          <% else %>
+            <%= comment.created_at.strftime("%Y/%m/%d") %> <!-- 24時間以上なら日付のみ -->
+          <% end %>
+        </h2>
+        <% if comment.user_id == current_user.id %>
+          <div class="dropdown">
+            <button class="dropdown-toggle">・・・</button>
+            <div class="dropdown-menu">
+              <%= link_to "削除", destroy_comment_path(comment), method: :delete, class: "dropdown-item", data: { confirm: "本当に削除しますか？" } %>
+            </div>
+          </div>
+        <% end %>
+      </div>
+      <div class="body">
+        <p class="content auto-change-url"><%= comment.content %></p>
+      </div>
+
+      <div class="comment-footer">
+        <!-- コメントボタン -->
+        <a href="<%= new_reply_comment_path(@post, comment) %>", class="icon">
+          <%= image_tag("comment.png", alt: "Comment Icon", class: "icon") %>
+          <span class="count" ><%= Comment.where(parent_comment_id: comment.id).count %></span>
+        </a>
+
+        <!-- 返信ボタン -->
+        <span class="ReplyButton">返信</span>
+      </div>
+    </div>
+
+    <!-- 返信フォーム -->
+    <div class="comment-reply-form-container ReplyForm" data-comment-id="<%= comment.id %>">
+      <%= form_with(url: create_reply_comment_path(@post, comment), model: @comment, local: true, method: :post) do |f| %>
+
+        <% if @comment.errors.any? %>
+          <ul class="error-messages">
+            <% @comment.errors.full_messages.each do |message| %>
+              <li>・<%= message %></li>
+            <% end %> </ul>
+        <% end %>
+
+        <div class="form">
+          <div class="textarea">
+            <%= f.label "返信コメント", class: 'form-label' %>
+            <%= f.text_area :content, class: 'form-control' %>
+          </div>
+
+          <div class="button-group">
+            <%= f.submit '送信', class: 'btn btn-primary' %>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  <% end %>
+</div>
+
+<!-- 返信フォーム -->
+<script>
+  function initializeReplyForms() {
+    // すべての返信フォームを最初に非表示にする
+    document.querySelectorAll(".ReplyForm").forEach((form) => {
+      form.style.display = "none";
+    });
+  }
+
+  // クリックイベントリスナーの登録（1回だけ実行）
+  document.addEventListener("click", function (event) {
+    if (event.target.classList.contains("ReplyButton")) {
+      const commentElement = event.target.closest(".comment");
+      const replyForm = commentElement.nextElementSibling; // 返信フォームは直後の要素
+
+      if (replyForm && replyForm.classList.contains("ReplyForm")) {
+        // フォームの表示/非表示を切り替え
+        replyForm.style.display = replyForm.style.display === "block" ? "none" : "block";
+      }
+    }
+  });
+
+  // Turboで動作するようにする
+  document.addEventListener("turbo:load", initializeReplyForms);
+  // 直接ページロード用（Turbo未使用時の保険）
+  document.addEventListener("DOMContentLoaded", initializeReplyForms);
+</script>

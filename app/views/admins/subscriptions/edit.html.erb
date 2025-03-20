@@ -1,0 +1,24 @@
+<div class="admin-container">
+  <%= form_with(model: @subscription, url: update_admin_subscription_path(@subscription), method: :post) do |f| %>  
+    <h2 class="h2">サブスクリプションの編集</h2>
+    <table class="admin_table">
+      <% Subscription.column_names.each do |column| %>
+        <tr>
+          <td><%= column.humanize %></td>
+          <td>
+            <% if column == "stripe_payment_status" %>
+              <%= f.select :stripe_payment_status, [["paid", "paid"], ["customer_created", "customer_created"], ["canceled", "canceled"]], selected: @subscription.stripe_payment_status %>
+            <% elsif column == "stripe_subscription_id" || column == "stripe_customer_id" %>
+              <%= f.text_field column, value: @subscription[column] %>
+            <% else %>
+              <%= @subscription[column] %>
+            <% end %>
+          </td>
+        </tr>
+      <% end %>
+    </table>
+    <span>stripe_payment_statusを変更後、Stripeのダッシュボード（https://stripe.com/jp）でも同じ変更を行ってください。<br></span>
+    <%= f.submit "更新", class: "btn btn-success" %>
+  <% end %>
+</div>
+

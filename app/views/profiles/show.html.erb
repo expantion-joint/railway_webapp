@@ -1,0 +1,203 @@
+<div class="profile-container">
+  <div class="profile">
+    <div class="background-image">
+      <%= image_tag("background.png", alt: "Background") %>
+    </div>
+    <div class="header">
+      <div class="profile-image">
+        <% if @profile.image.attached? %>
+          <%= image_tag(@profile.image) %>
+        <% else %>
+          <%= image_tag 'no_image.png' %>
+        <% end %>
+      </div>
+      <h2 class="username"><%= @profile.nickname %></h2>
+      <div class="like-total">
+        <% if @likes.count >= 10000 %>
+          <span class="like-number"><%= (@likes.count/10000.to_f).floor(2) %>万</span>
+        <% else %>
+          <span class="like-number"><%= @likes.count %></span>
+        <% end %>
+        <span class="like-unit">いいね</span>
+      </div>
+    </div>
+    <div class="body">
+      <P class=content><%= @profile.self_introduction %></p>
+      <%= link_to @profile.self_introduction_url, target: :_blank, rel: "noopener noreferrer" do %>
+        <div class="url"><%= @profile.self_introduction_url %></div>
+      <% end %>
+    </div>
+  </div>
+</div>
+
+<div class="profile-toggle-buttons">
+  <button id="post-button" class="profile-toggle-button">投稿一覧</button>
+  <button id="comment-button" class="profile-toggle-button">コメント一覧</button>
+  <button id="like-post-button" class="profile-toggle-button">いいね一覧</button>
+</div>
+
+<!-- 投稿一覧 -->
+<div class="profile-post-list">
+  <div class="post-list">
+    <% @posts.each_with_index do |post, i| %>
+      <%= render partial: "post", locals: { post: post, profile: @profile, comment_count: @comment_count[i] } %>
+    <% end %>
+  </div>
+  <div id="load-more-container-post">
+    <% if @posts.next_page %>
+      <button id="load-more-post-button" data-next-page="<%= @posts.next_page %>" data-type="post">
+        もっと読み込む
+      </button>
+    <% end %>
+  </div>
+</div>
+
+<!-- コメント一覧 -->
+<div class="profile-comment-list">
+  <div class="comment-list">
+    <% @comments.each_with_index do |comment, i| %>
+      <% comment_user_profile = Profile.find_by(user_id: comment.user_id) %>
+      <%= render partial: "comment", locals: { comment: comment, comment_user_profile: comment_user_profile } %>
+    <% end %>
+  </div>
+  <div id="load-more-container-comment">
+    <% if @comments.next_page %>
+      <button id="load-more-comment-button" data-next-page="<%= @comments.next_page %>" data-type="comment">
+        もっと読み込む
+      </button>
+    <% end %>
+  </div>
+</div>
+
+<!-- いいね一覧 -->
+<div class="profile-like-post-list">
+  <div class="like-post-list">
+    <% @like_posts.each_with_index do |like_post, i| %>
+      <%= render partial: "like_post", locals: { like_post: like_post, like_post_user_profile: @like_post_user_profiles[i], like_posts_comment_count: @like_posts_comment_count[i] } %>
+    <% end %>
+  </div>
+  <div id="load-more-container-like-post">
+    <% if @like_posts.next_page %>
+      <button id="load-more-like-post-button" data-next-page="<%= @like_posts.next_page %>" data-type="like_post">
+        もっと読み込む
+      </button>
+    <% end %>
+  </div>
+</div>
+
+<!-- 返信フォーム -->
+<script>
+  function initializeReplyForms() {
+    // すべての返信フォームを最初に非表示にする
+    document.querySelectorAll(".ReplyForm").forEach((form) => {
+      form.style.display = "none";
+    });
+  }
+
+  // クリックイベントリスナーの登録（1回だけ実行）
+  document.addEventListener("click", function (event) {
+    if (event.target.classList.contains("ReplyButton")) {
+      const commentElement = event.target.closest(".comment");
+      const replyForm = commentElement.nextElementSibling; // 返信フォームは直後の要素
+
+      if (replyForm && replyForm.classList.contains("ReplyForm")) {
+        // フォームの表示/非表示を切り替え
+        replyForm.style.display = replyForm.style.display === "block" ? "none" : "block";
+      }
+    }
+  });
+
+  // Turboで動作するようにする
+  document.addEventListener("turbo:load", initializeReplyForms);
+  // 直接ページロード用（Turbo未使用時の保険）
+  document.addEventListener("DOMContentLoaded", initializeReplyForms);
+</script>
+
+
+<!-- 投稿一覧、コメント一覧、いいね一覧の切り替え -->
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    const postButton = document.getElementById("post-button");
+    const commentButton = document.getElementById("comment-button");
+    const likepostButton = document.getElementById("like-post-button");
+    const postList = document.querySelector(".profile-post-list");
+    const commentList = document.querySelector(".profile-comment-list");
+    const likepostList = document.querySelector(".profile-like-post-list");
+
+    // 初期表示：投稿一覧を表示
+    postList.classList.add("active");
+    postButton.classList.add("active");
+
+    // 投稿一覧ボタンクリックイベント
+    postButton.addEventListener("click", () => {
+      postList.classList.add("active");
+      commentList.classList.remove("active");
+      likepostList.classList.remove("active");
+      postButton.classList.add("active");
+      commentButton.classList.remove("active");
+      likepostButton.classList.remove("active");
+    });
+
+    // コメント一覧ボタンクリックイベント
+    commentButton.addEventListener("click", () => {
+      commentList.classList.add("active");
+      postList.classList.remove("active");
+      likepostList.classList.remove("active");
+      commentButton.classList.add("active");
+      postButton.classList.remove("active");
+      likepostButton.classList.remove("active");
+    });
+
+    // いいね一覧ボタンクリックイベント
+    likepostButton.addEventListener("click", () => {
+      likepostList.classList.add("active");
+      postList.classList.remove("active");
+      commentList.classList.remove("active");
+      likepostButton.classList.add("active");
+      postButton.classList.remove("active");
+      commentButton.classList.remove("active");
+    });
+  });
+</script>
+
+
+<!-- 100投稿ずつ表示する -->
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    const loadMoreButtons = document.querySelectorAll("button[data-next-page]");
+
+    loadMoreButtons.forEach((button) => {
+      button.addEventListener("click", async () => {
+        const nextPage = button.dataset.nextPage;
+        const type = button.dataset.type; // post, comment, like_postなど
+
+        // 現在の検索条件を取得してクエリに追加
+        const params = new URLSearchParams(window.location.search);
+        params.set("page", nextPage);
+        params.set("type", type);
+
+        const url = `${window.location.pathname}?${params.toString()}`;
+
+        try {
+          const response = await fetch(url, {
+            headers: {
+              "X-Requested-With": "XMLHttpRequest",
+              "Accept": "text/javascript",
+            },
+          });
+
+          if (!response.ok) throw new Error("ネットワークエラー");
+
+          const script = await response.text();
+          eval(script); // show.js.erb を実行
+
+        } catch (error) {
+          console.error("エラーが発生しました:", error);
+        }
+      });
+    });
+  });
+</script>
+
+
+

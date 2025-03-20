@@ -1,0 +1,25 @@
+<% if @type == "post" %>
+  document.querySelector(".post-list").insertAdjacentHTML("beforeend", "<%= j(render partial: 'profiles/posts', locals: { posts: @posts, profile: @profile, comment_count: @comment_count }) %>");
+  const loadMoreButton = document.getElementById("load-more-post-button");
+  <% if @posts.next_page %>
+    loadMoreButton.dataset.nextPage = "<%= @posts.next_page %>";
+  <% else %>
+    loadMoreButton.remove();
+  <% end %>
+<% elsif @type == "comment" %>
+  document.querySelector(".comment-list").insertAdjacentHTML("beforeend", "<%= j(render partial: 'profiles/comments', locals: { comments: @comments, comment_user_profiles: @comment_user_profiles }) %>");
+  const loadMoreButton = document.getElementById("load-more-comment-button");
+  <% if @comments.next_page %>
+    loadMoreButton.dataset.nextPage = "<%= @comments.next_page %>";
+  <% else %>
+    loadMoreButton.remove();
+  <% end %>
+<% elsif @type == "like_post" %>
+  document.querySelector(".like-post-list").insertAdjacentHTML("beforeend", "<%= j(render partial: 'profiles/like_posts', locals: { like_posts: @like_posts, like_post_user_profiles: @like_post_user_profiles, like_posts_comment_count: @like_posts_comment_count }) %>");
+  const loadMoreButton = document.getElementById("load-more-like-post-button");
+  <% if @like_posts.next_page %>
+    loadMoreButton.dataset.nextPage = "<%= @like_posts.next_page %>";
+  <% else %>
+    loadMoreButton.remove();
+  <% end %>
+<% end %>

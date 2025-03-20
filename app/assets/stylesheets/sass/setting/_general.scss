@@ -1,0 +1,179 @@
+.main-container {
+  margin-top: 80px;
+  background: #ffffff;
+  min-height: calc(100vh - 80px);
+}
+
+/* ==============================
+  アラートメッセージ用 SCSS
+  - 成功 (success)
+  - 警告 (warning)
+  - エラー (error)
+  - 情報 (info)
+  ============================== */
+.flash-messages {
+  position: fixed;
+  top: -6px;
+  left: 50%;
+  transform: translateX(-50%); /* 画面中央配置 */
+  z-index: 1000;
+  width: 90%;
+  max-width: 600px; /* 適度な幅を設定 */
+  text-align: center;
+}
+
+.alert {
+  display: flex;
+  align-items: center;
+  padding: 15px 20px;
+  margin: 10px 0;
+  border-radius: 5px;
+  font-size: 16px;
+  font-weight: bold;
+  width: 100%;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  position: relative;
+
+  &::before {
+    content: "⚠"; /* デフォルトのアイコン */
+    font-size: 20px;
+    margin-right: 10px;
+  }
+
+  &.alert-success {
+    background-color: #d4edda;
+    color: #155724;
+    border-left: 5px solid #28a745;
+
+    &::before {
+      content: "✔"; /* 成功アイコン */
+      color: #28a745;
+    }
+  }
+
+  &.alert-warning {
+    background-color: #fff3cd;
+    color: #856404;
+    border-left: 5px solid #ffc107;
+
+    &::before {
+      content: "⚠"; /* 警告アイコン */
+      color: #ffc107;
+    }
+  }
+
+  &.alert-error {
+    background-color: #f8d7da;
+    color: #721c24;
+    border-left: 5px solid #dc3545;
+
+    &::before {
+      content: "✖"; /* エラーアイコン */
+      color: #dc3545;
+    }
+  }
+
+  &.alert-info {
+    background-color: #d1ecf1;
+    color: #0c5460;
+    border-left: 5px solid #17a2b8;
+
+    &::before {
+      content: "ℹ"; /* 情報アイコン */
+      color: #17a2b8;
+    }
+  }
+
+  /* 閉じるボタン */
+  .close-btn {
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    font-size: 18px;
+    font-weight: bold;
+    color: inherit;
+    cursor: pointer;
+  }
+}
+
+@keyframes slideFadeOut {
+  0% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-20px); // 上にスライド
+  }
+}
+
+.alert.fade-out {
+  animation: slideFadeOut 1s ease-out forwards; // 1秒かけてスライド + フェードアウト
+}
+  
+
+.btn {
+  display: inline-block;
+  padding: 8px 24px;
+  font-size: 16px;
+  font-weight: 600;
+  text-align: center;
+  border-radius: 6px;
+  cursor: pointer;
+  border: 1px solid transparent;
+  transition: all 0.3s ease-in-out;
+  background-color: #007bff;
+  color: white;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+
+  &:hover {
+    background-color: #0056b3;
+    box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15);
+  }
+
+  &:active {
+    transform: translateY(2px);
+    box-shadow: 0 3px 5px rgba(0, 0, 0, 0.2);
+  }
+}
+
+.btn-primary {
+  background-color: #007bff;
+  color: white;
+
+  &:hover {
+    background-color: #0056b3;
+  }
+}
+
+.btn-secondary {
+  background-color: #6c757d;
+  color: white;
+
+  &:hover {
+    background-color: #5a6268;
+  }
+}
+
+.btn-danger {
+  background-color: #dc3545;
+  color: white;
+
+  &:hover {
+    background-color: #c82333;
+  }
+}
+
+.error-messages {
+  color: red;            // 文字色を赤に
+  font-weight: bold;      // 強調
+  list-style: none;       // デフォルトのリストスタイルを削除
+  padding: 0;             // 余白調整
+}
+
+.error-messages li {
+  margin-bottom: 5px;     // エラー項目ごとに少し間隔を空ける
+}

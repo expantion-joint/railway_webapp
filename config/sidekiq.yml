@@ -1,0 +1,13 @@
+:concurrency: 1 # 並列して圧縮可能なファイル数
+:queues:
+  - default
+:redis:
+  url: redis://rails-redis-railway:6379/0
+# :scheduler:
+#   enabled: true
+#   dynamic: true
+#   schedule:
+#     compress_videos:
+#       cron: "0 2 * * *" # 毎日2時に実行
+#       class: "CompressUncompressedVideosJob"
+#       description: "毎日2:00に未圧縮の動画を処理"

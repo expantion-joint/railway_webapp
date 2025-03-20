@@ -1,0 +1,32 @@
+<div class="admin-container">
+  <%= form_with(model: @user, url: update_admin_user_path(@user), method: :post) do |f| %>  
+    <h2 class="h2">ユーザー情報の編集</h2>
+    <% if @user.errors.any? %>
+      <ul class="error-messages">
+        <% @user.errors.full_messages.each do |message| %>
+          <li>・<%= message %></li>
+        <% end %> </ul>
+    <% end %>
+    <table class="admin_table">
+      <% User.column_names.each do |column| %>
+        <tr>
+          <td><%= column.humanize %></td>
+          <td>
+            <% if column == "account_type" %>
+              <%= f.select :account_type, [["admin", "admin"], ["regular", "regular"]], selected: @user.account_type %>
+            <% elsif column == "email" %>
+              <%= f.text_field column, value: @user[column] %>
+            <% elsif column == "failed_attempts" %>
+              <%= f.number_field column, value: @user[column] %>
+            <% else %>
+              <%= @user[column] %>
+            <% end %>
+          </td>
+        </tr>
+      <% end %>
+    </table>
+    <span>メールアドレスを変更した場合、ユーザーにアカウントを有効化するためのメールが送付されます。ユーザーは、24時間以内に有効化する必要があります。<br></span>
+    <%= f.submit "更新", class: "btn btn-success" %>
+  <% end %>
+</div>
+

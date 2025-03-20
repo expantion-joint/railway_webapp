@@ -1,0 +1,85 @@
+/* ==============================
+   ノーマライズ用 SCSS
+   - ブラウザのデフォルトスタイルをリセット
+   - モダンな標準スタイルを適用
+   ============================== */
+
+/* すべての要素のボックスモデルを統一 */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+/* HTML, body の基本設定 */
+html {
+  font-size: 16px;
+  line-height: 1.6;
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: 'Arial', sans-serif;
+  color: #333;
+  background-color: #fff;
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* 画像の最大幅を100%に */
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* リンクのスタイルを統一 */
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+a:hover {
+  opacity: 0.8;
+}
+
+/* リストのデフォルトスタイルを削除 */
+ul, ol {
+  list-style: none;
+}
+
+/* フォーム要素のリセット */
+button, input, select, textarea {
+  font-family: inherit;
+  font-size: inherit;
+  color: inherit;
+  border: none;
+  background: none;
+  outline: none;
+}
+
+button {
+  cursor: pointer;
+}
+
+/* テーブルのスタイル調整 */
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+th, td {
+  padding: 10px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+}
+
+/* モバイル向けの調整 */
+@media (max-width: 768px) {
+  html {
+    font-size: 16px;
+  }
+}

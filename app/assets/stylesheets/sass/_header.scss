@@ -1,0 +1,70 @@
+.app-header-logo {
+  position: relative;
+	top: -70px;
+	left: 10px;
+	width: 100%;
+	max-width: 160px;
+  // left: 50%; /* 親要素の幅の中央（戻るボタンを配置した時に使用）*/
+  // transform: translateX(-80px); /* 中心に調整（戻るボタンを配置した時に使用）*/
+  z-index: 1;
+	img {
+		width: 100%;
+		height: auto;
+	}
+}
+
+.app-header-new-post-icon{
+	position: relative;
+	display: inline-block;
+	left: calc(100% - 220px);
+	top: -25px;
+	z-index: 2;
+	img {
+		display: block;
+	    width: 40px;
+		height: 40px;
+	}
+}
+
+.app-header-profile-image{
+	position: relative;
+	display: inline-block;
+	left: calc(100% - 120px);
+	top: -25px;
+	z-index: 2;
+	img {
+		display: block;
+	    width: 40px;
+		height: 40px;
+		border-radius: 100%;
+	}
+}
+
+.app-header-menu {
+	margin-top: -4px;
+	font-size: 13px;
+	margin-left: 1px;
+}
+
+.app-header-back-button-container {
+	position: relative;
+	top: -130px;
+	left: 10px;
+	padding: 5px 10px;
+  button {
+    padding: 5px 10px;
+    background-color: #000000bc;
+    color: #fff;
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 20px;
+    font-weight: bold;
+    }
+  
+  button:hover {
+    background-color: #000000;
+    }
+}
+
+	

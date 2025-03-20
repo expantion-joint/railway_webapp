@@ -1,0 +1,85 @@
+<!--　初期文
+<h2>Sign up</h2>
+
+<%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
+  <%= render "users/shared/error_messages", resource: resource %>
+
+  <div class="field">
+    <%= f.label :email %><br />
+    <%= f.email_field :email, autofocus: true, autocomplete: "email" %>
+  </div>
+
+  <div class="field">
+    <%= f.label :password %>
+    <% if @minimum_password_length %>
+    <em>(<%= @minimum_password_length %> characters minimum)</em>
+    <% end %><br />
+    <%= f.password_field :password, autocomplete: "new-password" %>
+  </div>
+
+  <div class="field">
+    <%= f.label :password_confirmation %><br />
+    <%= f.password_field :password_confirmation, autocomplete: "new-password" %>
+  </div>
+
+  <div class="actions">
+    <%= f.submit "Sign up" %>
+  </div>
+<% end %>
+
+<%= render "users/shared/links" %>
+-->
+
+<div class="device-container">
+  <div class="form-container">
+    <h2 class="h2">新規登録</h2>
+
+    <%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
+      <%= render "users/shared/error_messages", resource: resource %>
+
+      <div class="field">
+        <%= f.label :email, class: "label" %>
+        <%= f.email_field :email, autofocus: true, autocomplete: "email" %>
+      </div>
+
+      <div class="field">
+        <%= f.label :password,"パスワード（大文字・小文字・数字・記号を含む8文字以上）", class: "label"  %>
+        <%= f.password_field :password, autocomplete: "new-password" %>
+      </div>
+
+      <div class="field">
+        <%= f.label :password_confirmation, class: "label"  %>
+        <%= f.password_field :password_confirmation, autocomplete: "new-password" %>
+      </div>
+
+      <!--　利用規約 -->
+      <div class="device-image-container">
+        <%= image_tag 'terms_of_use_1-8.png' ,class: "device-image" %>
+        <%= image_tag 'terms_of_use_2-8.png' ,class: "device-image" %>
+        <%= image_tag 'terms_of_use_3-8.png' ,class: "device-image" %>
+        <%= image_tag 'terms_of_use_4-8.png' ,class: "device-image" %>
+        <%= image_tag 'terms_of_use_5-8.png' ,class: "device-image" %>
+        <%= image_tag 'terms_of_use_6-8.png' ,class: "device-image" %>
+        <%= image_tag 'terms_of_use_7-8.png' ,class: "device-image" %>
+        <%= image_tag 'terms_of_use_8-8.png' ,class: "device-image" %>
+      </div>
+
+      <div class="link-container">
+        <span><%= "利用規約を必ずご確認ください。" %></span>
+      </div>
+
+      <div class="actions">
+        <%= f.submit "利用規約に同意して登録メールを送信" %>
+      </div>
+      
+      <div class="link-container">
+        <span><%= "登録メール送信から24時間以内に本登録を完了して下さい。" %></span>
+      </div>
+    
+    <% end %>
+
+    <div class="link-container">
+      <%= render "users/shared/links" %>
+    </div>
+  </div>
+</div>
