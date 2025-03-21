@@ -11,16 +11,13 @@ const mix = require('laravel-mix');
  |
  */
 
-mix.setPublicPath('public')
-    .sass('app/assets/stylesheets/sass/app.scss', 'public/css/app.css')
-    .js('app/javascript/app.js', 'public/js/app.js')
-    .js('app/javascript/turbo.js', 'public/js/turbo.js');
-
-
-/* 本番環境 */
 if (mix.inProduction()) {
-    mix.setPublicPath('public')
-        .sass('app/assets/stylesheets/sass/app.scss', 'src/public/css/app.css')
-        .js('app/javascript/app.js', 'src/public/js/app.js')
-        .js('app/javascript/turbo.js', 'src/public/js/turbo.js');
-    }
+  mix.setPublicPath('src/public');  // 本番環境
+} else {
+  mix.setPublicPath('public'); // 開発環境
+}
+
+mix
+  .sass('app/assets/stylesheets/sass/app.scss', 'public/css/app.css')
+  .js('app/javascript/app.js', 'public/js/app.js')
+  .js('app/javascript/turbo.js', 'public/js/turbo.js');
