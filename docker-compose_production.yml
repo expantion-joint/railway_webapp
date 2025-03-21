@@ -71,7 +71,7 @@ services:
     volumes:
       - ./nginx/conf.d/default.conf:/etc/nginx/conf.d/default.conf
       - ./nginx/cronjob.sh:/etc/cron.daily/certbot-renew
-      - ./src/public:/src/public
+      - ./public:/src/public
       - ./etc/letsencrypt:/etc/letsencrypt  # 証明書を保存
       - ./var/www/html:/var/www/html  # Certbot の認証用
     depends_on:
