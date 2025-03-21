@@ -11,18 +11,13 @@ const mix = require('laravel-mix');
  |
  */
 
-if (mix.inProduction()) {
-    mix.setPublicPath('public')
-    .sass('app/assets/stylesheets/sass/app.scss', 'css')
-    .js('app/javascript/app.js', 'js')
-    .js('app/javascript/turbo.js', 'js')
-    .version(); // ← ハッシュ付きファイルを生成し、キャッシュ回避
-}
+ mix.setPublicPath('public'); // 共通設定
 
-if (mix.inDevelopment()) {
-    mix.setPublicPath('public')
-    .sass('app/assets/stylesheets/sass/app.scss', 'public/css/app.css')
-    .js('app/javascript/app.js', 'public/js/app.js')
-    .js('app/javascript/turbo.js', 'public/js/turbo.js');
-}
-    
+ mix
+   .sass('app/assets/stylesheets/sass/app.scss', 'css')
+   .js('app/javascript/app.js', 'js')
+   .js('app/javascript/turbo.js', 'js');
+ 
+ if (mix.inProduction()) {
+   mix.version(); // 本番環境のみハッシュ付き出力
+ }
