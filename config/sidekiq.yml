@@ -3,6 +3,11 @@
   - default
 :redis:
   url: redis://rails-redis-railway:6379/0
+:schedule:
+  active_storage_clean_job:
+    cron: "0 2 * * *"  # 毎日午前2時（日本時間の場合、環境によってはUTCで調整）
+    class: "ActiveStorageCleanJob"
+    queue: default
 # :scheduler:
 #   enabled: true
 #   dynamic: true
