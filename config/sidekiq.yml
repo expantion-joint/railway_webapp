@@ -1,18 +1,23 @@
-:concurrency: 1 # 並列して圧縮可能なファイル数
+:concurrency: 1  # 並列実行数（必要に応じて増減可）
+
 :queues:
   - default
+
 :redis:
   url: redis://rails-redis-railway:6379/0
-:schedule:
-  active_storage_clean_job:
-    cron: "0 2 * * *"  # 毎日午前2時（日本時間の場合、環境によってはUTCで調整）
-    class: "ActiveStorageCleanJob"
-    queue: default
-# :scheduler:
-#   enabled: true
-#   dynamic: true
-#   schedule:
-#     compress_videos:
-#       cron: "0 2 * * *" # 毎日2時に実行
-#       class: "CompressUncompressedVideosJob"
-#       description: "毎日2:00に未圧縮の動画を処理"
+
+:scheduler:
+  enabled: true
+  dynamic: true
+  schedule:
+    active_storage_clean_job:
+      cron: "0 2 * * *"  # 毎日午前2時（UTC基準）
+      class: "ActiveStorageCleanJob"
+      queue: default
+      description: "毎日2:00に未使用のActiveStorageファイルを削除"
+    # compress_videos:
+    #   cron: "0 2 * * *"  # 毎日午前2時（同じ時間）
+    #   class: "CompressUncompressedVideosJob"
+    #   queue: default
+    #   description: "毎日2:00に未圧縮の動画を処理"
+

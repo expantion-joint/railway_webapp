@@ -17,22 +17,6 @@ module Src
     
     # 追加 Active Job のキューアダプターを設定
     config.active_job.queue_adapter = :sidekiq
-    Sidekiq.configure_server do |config|
-      config.redis = { url: ENV.fetch('REDIS_URL', 'redis://rails-redis-railway:6379/0') }
-      # 定期的に非同期実行するための設定
-      config.on(:startup) do
-        schedule_file = "config/sidekiq.yml"
-    
-        if File.exist?(schedule_file)
-          Sidekiq::Scheduler.reload_schedule!
-        end
-      end
-    end
-
-    Sidekiq.configure_client do |config|
-      config.redis = { url: ENV.fetch('REDIS_URL', 'redis://rails-redis-railway:6379/0') }
-    end
-
 
     # Configuration for the application, engines, and railties goes here.
     #
