@@ -14,7 +14,6 @@ class Post < ApplicationRecord
 
   after_save :convert_video_async, if: -> { media.attached? && video? && valid_media?}
   after_save :convert_image_async, if: -> { media.attached? && image? && valid_media?}
-  before_update :remove_old_media, if: -> { media.attached? }
 
   before_destroy :purge_media
   
@@ -49,11 +48,6 @@ class Post < ApplicationRecord
   def video_thumbnail
     return unless media.content_type.start_with?("video/")
     media.representation(resize_to_limit: [1280, 720]).processed
-  end
-
-  # updateする際、S3に保存された古いmediaを削除
-  def remove_old_media
-    media.purge_later
   end
 
   # # 未圧縮の画像・動画を取得するメソッド

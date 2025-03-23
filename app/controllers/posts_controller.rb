@@ -59,10 +59,12 @@ class PostsController < ApplicationController
 
   def update
     @post = Post.find(params[:post_id])
-    if params[:post][:media]
-      @post.media.attach(params[:post][:media])
-    end
+    # 古いメディアがあれば削除（後で purge する用に保持）
+    old_media = @post.media if params[:post][:media].present? && @post.media.attached?
+    # 新しいメディアをアタッチ
+    @post.media.attach(params[:post][:media]) if params[:post][:media]
     if @post.update(post_params)
+      old_media&.purge_later
       redirect_to index_post_path, notice: '更新しました'
     else
       render :edit, status: :unprocessable_entity
