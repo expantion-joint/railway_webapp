@@ -64,7 +64,7 @@ class PostsController < ApplicationController
     # 新しいメディアをアタッチ
     @post.media.attach(params[:post][:media]) if params[:post][:media]
     if @post.update(post_params)
-      old_media&.purge_later
+      old_media.purge
       redirect_to index_post_path, notice: '更新しました'
     else
       render :edit, status: :unprocessable_entity
