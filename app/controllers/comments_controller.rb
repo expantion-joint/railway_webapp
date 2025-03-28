@@ -13,13 +13,14 @@ class CommentsController < ApplicationController
       @comment_user_profiles << comment_user_profile
     end
     @profile = Profile.find_by(user_id: @post.user_id)
+    @from = params[:id].to_i # 0:postにコメント可能 1:postにコメント不可
     render :new
   end
 
   def create
     @comment = Comment.new(comment_params)
     if @comment.save
-      redirect_to new_comment_path(params[:post_id]), notice: 'コメントしました'
+      redirect_to new_comment_path(params[:post_id], 0), notice: 'コメントしました'
       begin
         CommentMailer.receive_comment_mail(@comment).deliver_now
       rescue => e
@@ -80,15 +81,30 @@ class CommentsController < ApplicationController
       if parent_comment.parent_comment_id
         redirect_to new_reply_comment_path(params[:post_id], parent_comment.parent_comment_id), alert: '返信に失敗しました'
       else
-        redirect_to new_comment_path(params[:post_id]), alert: '返信に失敗しました'
+        redirect_to new_comment_path(params[:post_id], 0), alert: '返信に失敗しました'
       end
     end
+  end
+
+  def load_relevant_comments
+    # 投稿主が current_user の root コメント
+    root_comments = Comment.joins(:post)
+                          .where(parent_comment_id: nil, posts: { user_id: current_user.id })
+    # current_user のコメントに対する返信
+    reply_comments = Comment.where(parent_comment_id: Comment.where(user_id: current_user.id).select(:id))
+    # 両方を　@comments　にまとめて作成日時の昇順で並び替え、最初の100件を取得
+    @comments = (root_comments + reply_comments).sort_by(&:created_at).first(100)
+    # ユーザーIDの一覧からまとめてProfileを取得（1クエリ）
+    profiles = Profile.where(user_id: @comments.map(&:user_id).uniq).index_by(&:user_id)
+    # コメントごとに対応するプロフィールを並べた配列を作成
+    @comment_user_profiles = @comments.map { |comment| profiles[comment.user_id] }
+    render :relevant
   end
 
   def destroy
     @comment = Comment.find(params[:comment_id])
     @comment.destroy
-    redirect_to index_post_path, notice: 'コメントを削除しました'
+    redirect_to show_profile_path(current_user.id), notice: 'コメントを削除しました'
   end
 
 

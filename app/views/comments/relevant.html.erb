@@ -1,0 +1,52 @@
+<div class="comment-list">
+	<% @comments.each_with_index do |comment, i| %>
+		<% comment_user_profile = @comment_user_profiles[i] %>
+		<div class="comment">
+			<div class="header">
+				<div class="header_image">
+					<% if comment_user_profile.image.attached? %>
+						<%= link_to show_profile_path(comment_user_profile.user_id) do %>
+							<%= image_tag(comment_user_profile.image) %>
+						<% end %>
+					<% else %>
+						<%= link_to show_profile_path(comment_user_profile.user_id) do %>
+							<%= image_tag 'no_image.png' %>
+						<% end %>
+					<% end %>
+				</div>
+				<h2 class="username"><%= comment_user_profile.nickname %></h2>
+				<h2 class="timestamp">
+					<% if Time.current - comment.created_at < 24.hours %>
+						<%= comment.created_at.strftime("%H:%M") %> <!-- 24時間未満なら時間のみ -->
+					<% else %>
+						<%= comment.created_at.strftime("%Y/%m/%d") %> <!-- 24時間以上なら日付のみ -->
+					<% end %>
+				</h2>
+				<% if comment.user_id == current_user.id %>
+					<div class="dropdown">
+						<button class="dropdown-toggle">・・・</button>
+						<div class="dropdown-menu">
+							<%= link_to "削除", destroy_comment_path(comment), method: :delete, class: "dropdown-item", data: { confirm: "本当に削除しますか？" } %>
+						</div>
+					</div>
+				<% end %>
+			</div>
+
+			<div class="body">
+				<p class="content auto-change-url"><%= comment.content %></p>
+			</div>
+
+			<div class="comment-footer">
+				<% if comment.parent_comment_id %>
+					<a href="<%= new_reply_comment_path(comment.post_id, comment.parent_comment_id) %>", class="a-RelevantReplySource">
+						<span class="RelevantReplySource">返信</span>
+					</a>
+				<% else %>
+					<a href="<%= new_comment_path(comment.post_id, 1) %>", class="a-RelevantReplySource">
+						<span class="RelevantReplySource">返信</span>
+					</a>
+				<% end %>
+			</div>
+		</div>
+	<% end %>
+</div>

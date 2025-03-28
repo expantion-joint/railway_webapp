@@ -43,10 +43,11 @@ Rails.application.routes.draw do
   post 'profiles/edit', to: 'profiles#update', as: 'update_profile'
 
   # comment
-  get 'posts/show/:post_id/comments/new', to: 'comments#new', as: 'new_comment'
+  get 'posts/show/:post_id/comments/new/:id', to: 'comments#new', as: 'new_comment'
   post 'posts/show/:post_id/comments/new', to: 'comments#create', as: 'create_comment'
   get 'posts/show/:post_id/comments/new_reply/:comment_id', to: 'comments#new_reply', as: 'new_reply_comment'
-  post 'posts/show/:post_id/comments/newreply/:comment_id', to: 'comments#create_reply', as: 'create_reply_comment'
+  post 'posts/show/:post_id/comments/new_reply/:comment_id', to: 'comments#create_reply', as: 'create_reply_comment'
+  get 'comments/relevant', to: 'comments#load_relevant_comments', as: 'load_relevant_comment'
   delete 'comments/destroy/:comment_id', to: 'comments#destroy', as: 'destroy_comment'
 
   # like  
