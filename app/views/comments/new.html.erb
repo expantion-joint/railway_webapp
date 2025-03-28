@@ -40,30 +40,32 @@
   </div>
 </div>
 
-<div class="comment-form-container">
-  <div class="comment">
-    <%= form_with(url: create_comment_path(@post), model: @comment, local: true, method: :post) do |f| %>
+<% if @from == 0 %>
+  <div class="comment-form-container">
+    <div class="comment">
+      <%= form_with(url: create_comment_path(@post), model: @comment, local: true, method: :post) do |f| %>
 
-      <% if @comment.errors.any? %>
-        <ul class="error-messages">
-          <% @comment.errors.full_messages.each do |message| %>
-            <li>・<%= message %></li>
-          <% end %> </ul>
+        <% if @comment.errors.any? %>
+          <ul class="error-messages">
+            <% @comment.errors.full_messages.each do |message| %>
+              <li>・<%= message %></li>
+            <% end %> </ul>
+        <% end %>
+
+        <div class="form">
+          <div class="textarea">
+            <%= f.label "コメント", class: 'form-label' %>
+            <%= f.text_area :content, class: 'form-control' %>
+          </div>
+
+          <div class="button-group">
+            <%= f.submit '送信', class: 'btn btn-primary' %>
+          </div>
+        </div>
       <% end %>
-
-      <div class="form">
-        <div class="textarea">
-          <%= f.label "コメント", class: 'form-label' %>
-          <%= f.text_area :content, class: 'form-control' %>
-        </div>
-
-        <div class="button-group">
-          <%= f.submit '送信', class: 'btn btn-primary' %>
-        </div>
-      </div>
-    <% end %>
+    </div>
   </div>
-</div>
+<% end %>
 
 <div class="comment-list">
   <% @comments.where(parent_comment_id: nil).each do |comment| %>

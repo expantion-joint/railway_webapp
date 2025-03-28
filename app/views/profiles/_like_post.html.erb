@@ -55,7 +55,7 @@
 			<%= render "likes/like", post: like_post %>
 		</div>
 		<!-- コメントボタン -->
-		<a href="<%= new_comment_path(like_post) %>", class="icon">
+		<a href="<%= new_comment_path(like_post, 0) %>", class="icon">
 			<%= image_tag("comment.png", alt: "Comment Icon", class: "icon") %>
 			<span class="count" ><%= like_posts_comment_count %></span>
 		</a>

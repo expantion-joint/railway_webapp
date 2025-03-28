@@ -63,7 +63,7 @@ class PostsController < ApplicationController
       @post.media.attach(params[:post][:media])
     end
     if @post.update(post_params)
-      redirect_to index_post_path, notice: '更新しました'
+      redirect_to show_profile_path(current_user.id), notice: '更新しました'
     else
       render :edit, status: :unprocessable_entity
     end
@@ -72,7 +72,7 @@ class PostsController < ApplicationController
   def destroy
     @post = Post.find(params[:post_id])
     @post.destroy
-    redirect_to index_post_path, notice: '削除しました'
+    redirect_to show_profile_path(current_user.id), notice: '削除しました'
   end
 
   private

@@ -141,6 +141,7 @@
       .content {
         margin: 0;
         font-size: 14px;
+        line-height: 1.2;
         white-space: pre-line; /* 改行を反映させる */
       }
 
@@ -175,6 +176,61 @@
         margin-left: -10px;
         text-decoration: none;
         color: #505050;
+      }
+
+      .a-ReplySource {
+        margin-left: 15px;
+        font-size: 14px;
+
+        .ReplySource {
+          display: inline-block;
+          padding: 2px 10px;
+          font-size: 14px;
+          // font-weight: bold;
+          color: #000000;
+          background-color: #ffffff;
+          border: none;
+          border-radius: 8px;
+          cursor: pointer;
+          text-align: center;
+          text-decoration: none;
+        }
+
+        .ReplySource:hover {
+          background-color: #e2e2e2; /* ホバー時の色変更 */
+        }
+        
+        .ReplySource:active {
+          background-color: #c7c7c7; /* クリック時の色変更 */
+          box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* 押し込まれた感の影 */
+        }
+      }
+
+      .a-RelevantReplySource {
+        font-size: 14px;
+
+        .RelevantReplySource {
+          display: inline-block;
+          padding: 2px 10px;
+          font-size: 14px;
+          // font-weight: bold;
+          color: #000000;
+          background-color: #ffffff;
+          border: none;
+          border-radius: 8px;
+          cursor: pointer;
+          text-align: center;
+          text-decoration: none;
+        }
+
+        .RelevantReplySource:hover {
+          background-color: #e2e2e2; /* ホバー時の色変更 */
+        }
+        
+        .RelevantReplySource:active {
+          background-color: #c7c7c7; /* クリック時の色変更 */
+          box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* 押し込まれた感の影 */
+        }
       }
 
       .ReplyButton {

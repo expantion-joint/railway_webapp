@@ -107,7 +107,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const urlRegex = /(https?:\/\/[^\s]+)/g;
     // URLをリンクに変換
     const linkedText = contentText.replace(urlRegex, function (url) {
-      return `<a href="${url}" target="_blank" rel="noopener">${url}</a>`;
+      return `<a href="${url}" target="_blank" rel="noopener" class="auto-link">${url}</a>`;
     });
     // 変換後のHTMLを挿入
     contentElement.innerHTML = linkedText;

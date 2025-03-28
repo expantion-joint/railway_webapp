@@ -41,6 +41,16 @@
 		</a>
 		<!-- 返信ボタン -->
 		<span class="ReplyButton">返信</span>
+		<!-- コメント元の投稿を表示するボタン -->
+		<% if comment.parent_comment_id %>
+			<a href="<%= new_reply_comment_path(comment.post_id, comment.parent_comment_id) %>", class="a-ReplySource">
+				<span class="ReplySource">コメント元を表示</span>
+			</a>
+		<% else %>
+			<a href="<%= new_comment_path(comment.post_id, 1) %>", class="a-ReplySource">
+				<span class="ReplySource">コメント元を表示</span>
+			</a>
+    <% end %>
 	</div>
 </div>
 
