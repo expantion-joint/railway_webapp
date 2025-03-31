@@ -16,7 +16,7 @@
       queue: default
       description: "毎日2:00に未使用のActiveStorageファイルを削除"
     daily_report_job:
-      cron: "10 23 * * *"  # 毎朝7時
+      cron: "0 3 * * *"  # 毎日午前3時
       class: DailyReportJob
       queue: default
       description: "毎日3:00にアクティブユーザー数などを集計"
