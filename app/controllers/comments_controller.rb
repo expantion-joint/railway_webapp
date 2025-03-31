@@ -93,7 +93,7 @@ class CommentsController < ApplicationController
     # current_user のコメントに対する返信
     reply_comments = Comment.where(parent_comment_id: Comment.where(user_id: current_user.id).select(:id))
     # 両方を　@comments　にまとめて作成日時の昇順で並び替え、最初の100件を取得
-    @comments = (root_comments + reply_comments).sort_by(&:created_at).first(100)
+    @comments = (root_comments + reply_comments).sort_by(&:created_at).reverse.first(100)
     # ユーザーIDの一覧からまとめてProfileを取得（1クエリ）
     profiles = Profile.where(user_id: @comments.map(&:user_id).uniq).index_by(&:user_id)
     # コメントごとに対応するプロフィールを並べた配列を作成

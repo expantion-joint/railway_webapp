@@ -2,6 +2,7 @@ class ApplicationController < ActionController::Base
 
   before_action :authenticate_user!
   before_action :find_subscription
+  before_action :update_last_seen_at, if: :user_signed_in?
 
   protected
 
@@ -30,7 +31,7 @@ class ApplicationController < ActionController::Base
     subscription = Subscription.find_by(user_id: current_user.id)
     # subscriptionがnilの場合、またはstatusが特定の状態の場合、アクセスを拒否
     if subscription.nil? || subscription.stripe_payment_status == "customer_created" || subscription.stripe_payment_status == "canceled" || subscription.stripe_payment_status.nil?
-      redirect_to index_home_path, alert: "サブスク登録して下さい"
+      redirect_to index_home_path, alert: "サブスク登録してください"
     end
   end
 
@@ -42,6 +43,11 @@ class ApplicationController < ActionController::Base
         @subscription.stripe_payment_status = "not_created_subscription"
       end
     end
+  end
+
+  # ユーザーがアクセスした日時を記録
+  def update_last_seen_at
+    current_user.update_column(:last_seen_at, Time.current)
   end
 
 end

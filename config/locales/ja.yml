@@ -20,6 +20,7 @@ ja:
         last_name: '姓'
         nickname: 'ニックネーム'
         gender: '性別'
+        prefecture: 'お住まいの地域'
         birthday: '生年月日'
         self_introduction: '自己紹介'
         self_introduction_url: 'URL'

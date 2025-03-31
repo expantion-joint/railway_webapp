@@ -13,7 +13,7 @@
 
       <div class="form-group">
         <%= f.label :category, class: 'form-label'  %>
-        <%= f.select :category, Post.categories.keys.map { |k| [k.humanize, k] }, { include_blank: "選択して下さい" }, { class: "form-control-narrow-width" } %>
+        <%= f.select :category, Post.categories.keys.map { |k| [k.humanize, k] }, { include_blank: "選択してください" }, { class: "form-control-narrow-width" } %>
       </div>
 
       <div class="form-group">

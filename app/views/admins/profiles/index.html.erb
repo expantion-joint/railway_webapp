@@ -1,25 +1,25 @@
 <div class="admin-container">
-	<h2 class="h2">プロフィール一覧</h2>
+  <h2 class="h2">プロフィール一覧</h2>
   <table class="admin_table">
-		<thead>
-			<tr>
-				<% Profile.column_names.each do |column| %>
-					<th><%= column.humanize %></th>
-				<% end %>
-				<th>button</th>
-			</tr>
-		</thead>
-		<tbody>
-			<% @profiles.each do |profile| %>
-				<tr>
-					<% Profile.column_names.each do |column| %>
-						<td><%= profile[column] %></td>
-					<% end %>
-					<td>
+    <thead>
+      <tr>
+        <% Profile.column_names.each do |column| %>
+          <th><%= column.humanize %></th>
+        <% end %>
+        <th>button</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @profiles.each do |profile| %>
+        <tr>
+          <% Profile.column_names.each do |column| %>
+            <td><%= profile[column] %></td>
+          <% end %>
+          <td>
             <%= link_to '削除', destroy_admin_profile_path(profile), method: :delete, data: { confirm: "本当に削除しますか？プロフィールに紐づいた投稿も全て削除されます。" }, class: "btn btn-danger" %>
-					</td>
-				</tr>
-			<% end %>
-		</tbody>
-	</table>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
 </div>

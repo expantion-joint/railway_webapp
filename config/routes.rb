@@ -26,6 +26,7 @@ Rails.application.routes.draw do
   get 'homes/policy', to: 'homes#policy', as: 'policy_home'
   get 'homes/terms', to: 'homes#terms', as: 'terms_home'
   get 'homes/tokushoho', to: 'homes#tokushoho', as: 'tokushoho_home'
+  get 'homes/how_to_use', to: 'homes#how_to_use', as: 'how_to_use_home'
 
   # post
   get 'posts/index', to: 'posts#index', as: 'index_post'
@@ -105,6 +106,9 @@ Rails.application.routes.draw do
 
   # dashboard
   get 'admins/dashboards/index', to: 'admins/dashboards#index', as: 'index_admin_dashboard'
+
+  # analytics
+  get 'admins/analytics/index', to: 'admins/analytics#index', as: 'index_admin_analytics'
 
   # Sidekiq Web UI
   require 'sidekiq/web'

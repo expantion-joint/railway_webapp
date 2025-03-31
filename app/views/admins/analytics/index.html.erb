@@ -1,0 +1,31 @@
+<div class="admin-container">
+  <h2>アクティブユーザー数</h2>
+  <p>今日: <%= @today_active_users %></p>
+  <p>昨日: <%= @yesterday_active_users %></p>
+  <p>過去7日間: <%= @weekly_active_users %></p>
+
+  <h2>投稿数</h2>
+  <p>今日: <%= @today_active_users %></p>
+  <p>昨日: <%= @yesterday_active_users %></p>
+  <p>過去7日間: <%= @weekly_active_users %></p>
+
+  <h2>年代別ユーザー数</h2>
+  <table>
+    <% @age_groups.each do |group, count| %>
+      <tr>
+        <td><%= group %></td>
+        <td><%= count %>人</td>
+      </tr>
+    <% end %>
+  </table>
+
+  <h2>都道府県別ユーザー数</h2>
+  <table>
+    <% @prefecture_counts.each do |pref, count| %>
+      <tr>
+        <td><%= pref.presence || "未登録" %></td>
+        <td><%= count %>人</td>
+      </tr>
+    <% end %>
+  </table>
+</div>

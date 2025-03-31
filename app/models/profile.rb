@@ -31,6 +31,37 @@ class Profile < ApplicationRecord
     image.purge if image.attached?
   end
 
+  # 生年月日から年齢を算出
+  def age
+		return nil unless birthday
+		now = Time.zone.now
+		age = now.year - birthday.year
+		age -= 1 if birthday.to_date.change(year: now.year) > now.to_date
+		age
+	end
+
+	def age_group
+		return "不明" unless age
+		case age
+		when 0..9
+			"10歳未満"
+		when 10..19
+			"10代"
+		when 20..29
+			"20代"
+		when 30..39
+			"30代"
+		when 40..49
+			"40代"
+		when 50..59
+			"50代"
+		when 60..69
+			"60代"
+		else
+			"70代以上"
+		end
+	end
+
   private
 
   # 非同期で画像を変換 & 圧縮

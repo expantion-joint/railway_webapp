@@ -58,6 +58,10 @@
                   <%= link_to "いいねランキング", show_like_path, class: "nav-link" %>
                   <div class="under-line"></div>
                 </li>
+                <li> <!--  本番環境用 user_id=1がお知らせ用のアカウント -->
+                  <%= link_to "お知らせ", show_profile_path(1), class: "nav-link" %>
+                  <div class="under-line"></div>
+                </li>
               </div>
 
               <li>
@@ -86,6 +90,10 @@
               <% end %>
               <li>
                 <div class="menu-subtitle">#その他</div>
+              </li>
+              <li>
+                <%= link_to "推し鉄.comの使い方", how_to_use_home_path, class: "nav-link" %>
+                <div class="under-line"></div>
               </li>
               <li>
                 <%= link_to "プライバシーポリシー", policy_home_path, class: "nav-link" %>

@@ -28,7 +28,12 @@
 
       <div class="form-group">
         <%= f.label :gender, class: 'form-label'  %>
-        <%= f.select :gender, Profile.genders.keys.map { |k| [k.humanize, k] }, { include_blank: "選択して下さい" }, { class: "form-control-narrow-width" } %>
+        <%= f.select :gender, Profile.genders.keys.map { |k| [k.humanize, k] }, { include_blank: "選択してください" }, { class: "form-control-narrow-width" } %>
+      </div>
+
+      <div class="form-group">
+        <%= f.label :prefecture, class: 'form-label'  %>
+        <%= f.select :prefecture, JP_PREFECTURES, { include_blank: "選択してください" }, { class: "form-control-narrow-width" } %>
       </div>
 
       <div class="form-group">
