@@ -13,7 +13,7 @@ class SubscriptionsController < ApplicationController
       line_items: [{
         price_data: {
           currency: 'jpy', # 日本円
-          unit_amount: 500, # 500円
+          unit_amount: 300, # 300円
           recurring: { interval: 'month' }, # 定期購入（毎月）
           product_data: {
             name: '推し鉄.com 月額サブスクリプション' # サービス名
