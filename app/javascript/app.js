@@ -163,7 +163,6 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 
-
 // アラートを数秒後に消す
 document.addEventListener("DOMContentLoaded", () => {
   const alerts = document.querySelectorAll(".alert");
@@ -178,3 +177,20 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 });
 
+
+// 送信時やリンククリック時に表示するJS（読み込み表示）
+document.addEventListener("DOMContentLoaded", function () {
+  // フォーム送信時にローディング表示
+  document.querySelectorAll("form").forEach(form => {
+    form.addEventListener("submit", () => {
+      document.getElementById("loading-overlay").style.display = "flex";
+    });
+  });
+
+  // 特定のリンク（更新ボタンなど）クリック時も表示する場合
+  document.querySelectorAll(".show-loading").forEach(link => {
+    link.addEventListener("click", () => {
+      document.getElementById("loading-overlay").style.display = "flex";
+    });
+  });
+});
