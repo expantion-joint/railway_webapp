@@ -17,7 +17,7 @@ class PostsController < ApplicationController
     end
     @posts = @posts.order(created_at: :desc)
     # ページネーションを追加 (100件ずつ表示)
-    @posts = @posts.page(params[:page]).per(10) #100に変更
+    @posts = @posts.page(params[:page]).per(100) # 100件ずつ
     @profiles = @posts.map(&:profile)
     # 投稿毎のコメント数の算出
     @comment_count = []

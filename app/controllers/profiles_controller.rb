@@ -44,11 +44,11 @@ class ProfilesController < ApplicationController
   
     if params[:type] == "post"
       @type = "post"
-      @posts = Post.where(user_id: params[:user_id]).order(created_at: :desc).page(params[:page]).per(10)
+      @posts = Post.where(user_id: params[:user_id]).order(created_at: :desc).page(params[:page]).per(100)
       @comment_count = @posts.map { |post| Comment.where(post_id: post.id).count }
     elsif params[:type] == "comment"
       @type = "comment"
-      @comments = Comment.where(user_id: params[:user_id]).order(created_at: :desc).page(params[:page]).per(10)
+      @comments = Comment.where(user_id: params[:user_id]).order(created_at: :desc).page(params[:page]).per(100)
   
       # 各コメントに対応するユーザーのプロフィールを取得
       @comment_user_profiles = @comments.map { |comment| Profile.find_by(user_id: comment.user_id) }
@@ -57,21 +57,21 @@ class ProfilesController < ApplicationController
       @like_posts = Post.where(id: Like.where(user_id: params[:user_id]).pluck(:post_id))
                   .order(created_at: :desc)
                   .page(params[:page])
-                  .per(10)
+                  .per(100)
       @like_posts_comment_count = @like_posts.map { |post| Comment.where(post_id: post.id).count }
       
       # 各投稿に対応するユーザーのプロフィールを取得
       @like_post_user_profiles = @like_posts.map { |like_post| Profile.find_by(user_id: like_post.user_id) }
     else
       @type = "post"
-      @posts = Post.where(user_id: params[:user_id]).order(created_at: :desc).page(params[:page]).per(10)
-      @comments = Comment.where(user_id: params[:user_id]).order(created_at: :desc).page(params[:page]).per(10)
+      @posts = Post.where(user_id: params[:user_id]).order(created_at: :desc).page(params[:page]).per(100)
+      @comments = Comment.where(user_id: params[:user_id]).order(created_at: :desc).page(params[:page]).per(100)
       @comment_count = @posts.map { |post| Comment.where(post_id: post.id).count }
       @comment_user_profiles = @comments.map { |comment| Profile.find_by(user_id: comment.user_id) }
       @like_posts = Post.where(id: Like.where(user_id: params[:user_id]).pluck(:post_id))
                   .order(created_at: :desc)
                   .page(params[:page])
-                  .per(10)
+                  .per(100)
       @like_posts_comment_count = @like_posts.map { |post| Comment.where(post_id: post.id).count }
       @like_post_user_profiles = @like_posts.map { |like_post| Profile.find_by(user_id: like_post.user_id) }
     end
