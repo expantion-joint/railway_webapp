@@ -13,5 +13,9 @@ class HomesController < ApplicationController
   def terms
     render :terms
   end
+
+  def tokushoho
+    render :tokushoho
+  end
   
 end

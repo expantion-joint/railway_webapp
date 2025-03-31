@@ -25,6 +25,7 @@ Rails.application.routes.draw do
   get '/', to: 'homes#index', as: 'index_home'
   get 'homes/policy', to: 'homes#policy', as: 'policy_home'
   get 'homes/terms', to: 'homes#terms', as: 'terms_home'
+  get 'homes/tokushoho', to: 'homes#tokushoho', as: 'tokushoho_home'
 
   # post
   get 'posts/index', to: 'posts#index', as: 'index_post'
