@@ -28,6 +28,7 @@ class ProfilesController < ApplicationController
   def update
     @profile = Profile.find_by(user_id: current_user.id)
     if params[:profile][:image]
+      @profile.image.purge
       @profile.image.attach(params[:profile][:image])
     end
     if @profile.update(profile_params)

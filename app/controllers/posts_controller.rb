@@ -60,6 +60,7 @@ class PostsController < ApplicationController
   def update
     @post = Post.find(params[:post_id])
     if params[:post][:media]
+      @post.media.purge
       @post.media.attach(params[:post][:media])
     end
     if @post.update(post_params)
