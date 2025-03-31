@@ -13,6 +13,7 @@ class CommentMailer < ApplicationMailer
       parent = Post.find(comment.post_id)
       @url = Rails.application.routes.url_helpers.new_comment_url(
         post_id: comment.post_id,
+        id: 1, # 0:postにコメント可能 1:postにコメント不可
         host: "oshitetsu.com"
         # host: "localhost:8080"
       )
