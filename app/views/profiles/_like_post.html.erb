@@ -1,64 +1,64 @@
 <div class="like-post">
-	<div class="header">
-		<div class="header_image">
-			<% if like_post_user_profile.image.attached? %>
-				<%= link_to show_profile_path(like_post_user_profile.user_id) do %>
-					<%= image_tag(like_post_user_profile.image) %>
-				<% end %>
-			<% else %>
-				<%= link_to show_profile_path(like_post_user_profile.user_id) do %>
-					<%= image_tag 'no_image.png' %>
-				<% end %>
-			<% end %>
-		</div>
-		<h2 class="username"><%= like_post_user_profile.nickname %></h2>
-		<h2 class="category"><%= like_post.category %></h2>
-		<h2 class="timestamp">
-			<% if Time.current - like_post.created_at < 24.hours %>
-				<%= like_post.created_at.strftime("%H:%M") %> <!-- 24時間未満なら時間のみ -->
-			<% else %>
-				<%= like_post.created_at.strftime("%Y/%m/%d") %> <!-- 24時間以上なら日付のみ -->
-			<% end %>
-		</h2>
-		<% if like_post.user_id == current_user.id %>
-			<div class="dropdown">
-				<button class="dropdown-toggle">・・・</button>
-				<div class="dropdown-menu">
-					<%= link_to "編集", edit_post_path(like_post), class: "dropdown-item" %>
-					<%= link_to "削除", destroy_post_path(like_post), method: :delete, class: "dropdown-item", data: { confirm: "本当に削除しますか？" } %>
-				</div>
-			</div>
-		<% end %>
-	</div>
+  <div class="header">
+    <div class="header_image">
+      <% if like_post_user_profile.image.attached? %>
+        <%= link_to show_profile_path(like_post_user_profile.user_id) do %>
+          <%= image_tag(like_post_user_profile.image) %>
+        <% end %>
+      <% else %>
+        <%= link_to show_profile_path(like_post_user_profile.user_id) do %>
+          <%= image_tag 'no_image.png' %>
+        <% end %>
+      <% end %>
+    </div>
+    <h2 class="username"><%= like_post_user_profile.nickname %></h2>
+    <h2 class="category"><%= like_post.category %></h2>
+    <h2 class="timestamp">
+      <% if Time.current - like_post.created_at < 24.hours %>
+        <%= like_post.created_at.strftime("%H:%M") %> <!-- 24時間未満なら時間のみ -->
+      <% else %>
+        <%= like_post.created_at.strftime("%Y/%m/%d") %> <!-- 24時間以上なら日付のみ -->
+      <% end %>
+    </h2>
+    <% if like_post.user_id == current_user.id %>
+      <div class="dropdown">
+        <button class="dropdown-toggle">・・・</button>
+        <div class="dropdown-menu">
+          <%= link_to "編集", edit_post_path(like_post), class: "dropdown-item" %>
+          <%= link_to "削除", destroy_post_path(like_post), method: :delete, class: "dropdown-item", data: { confirm: "本当に削除しますか？" } %>
+        </div>
+      </div>
+    <% end %>
+  </div>
 
-	<h2 class="title"><%= like_post.title %></h2>
-	<div class="body">
-		<p class="content auto-change-url"><%= like_post.body %></p>
-	</div>
-	
-	<div class="media">
-		<% if like_post.media.attached? %>
-			<% if like_post.media.content_type.start_with?('image/') %>
-				<%= image_tag(like_post.media, alt: "Posted image", class: "img") %>
-			<% elsif like_post.media.content_type.start_with?('video/') %>
-				<video controls class="video" poster="<%= url_for(like_post.video_thumbnail) %>">
-					<source src="<%= url_for(like_post.media) %>" type="<%= like_post.media.content_type %>">
-					お使いのブラウザは動画タグをサポートしていません。
-				</video>
-			<% end %>
-		<% end %>
-	</div>
-	
-	<div class="post-footer">
-		<!-- いいねボタン -->
-		<div id="like_buttons_<%= like_post.id %>">
-			<%= render "likes/like", post: like_post %>
-		</div>
-		<!-- コメントボタン -->
-		<a href="<%= new_comment_path(like_post, 0) %>", class="icon">
-			<%= image_tag("comment.png", alt: "Comment Icon", class: "icon") %>
-			<span class="count" ><%= like_posts_comment_count %></span>
-		</a>
-	</div>
+  <h2 class="title"><%= like_post.title %></h2>
+  <div class="body">
+    <p class="content auto-change-url"><%= like_post.body %></p>
+  </div>
+  
+  <div class="media">
+    <% if like_post.media.attached? %>
+      <% if like_post.media.content_type.start_with?('image/') %>
+        <%= image_tag(like_post.media, alt: "Posted image", class: "img") %>
+      <% elsif like_post.media.content_type.start_with?('video/') %>
+        <video controls class="video" poster="<%= url_for(like_post.video_thumbnail) %>">
+          <source src="<%= url_for(like_post.media) %>" type="<%= like_post.media.content_type %>">
+          お使いのブラウザは動画タグをサポートしていません。
+        </video>
+      <% end %>
+    <% end %>
+  </div>
+  
+  <div class="post-footer">
+    <!-- いいねボタン -->
+    <div id="like_buttons_<%= like_post.id %>">
+      <%= render "likes/like", post: like_post %>
+    </div>
+    <!-- コメントボタン -->
+    <a href="<%= new_comment_path(like_post, 0) %>", class="icon">
+      <%= image_tag("comment.png", alt: "Comment Icon", class: "icon") %>
+      <span class="count" ><%= like_posts_comment_count %></span>
+    </a>
+  </div>
 
 </div>

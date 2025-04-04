@@ -1,79 +1,79 @@
 <div class="comment">
-	<div class="header">
-		<div class="header_image">
-			<% if comment_user_profile.image.attached? %>
-				<%= link_to show_profile_path(comment_user_profile.user_id) do %>
-					<%= image_tag(comment_user_profile.image) %>
-				<% end %>
-			<% else %>
-				<%= link_to show_profile_path(comment_user_profile.user_id) do %>
-					<%= image_tag 'no_image.png' %>
-				<% end %>
-			<% end %>
-		</div>
-		<h2 class="username"><%= comment_user_profile.nickname %></h2>
-		<h2 class="timestamp">
-			<% if Time.current - comment.created_at < 24.hours %>
-				<%= comment.created_at.strftime("%H:%M") %> <!-- 24時間未満なら時間のみ -->
-			<% else %>
-				<%= comment.created_at.strftime("%Y/%m/%d") %> <!-- 24時間以上なら日付のみ -->
-			<% end %>
-		</h2>
-		<% if comment.user_id == current_user.id %>
-			<div class="dropdown">
-				<button class="dropdown-toggle">・・・</button>
-				<div class="dropdown-menu">
-					<%= link_to "削除", destroy_comment_path(comment), method: :delete, class: "dropdown-item", data: { confirm: "本当に削除しますか？" } %>
-				</div>
-			</div>
-		<% end %>
-	</div>
-
-	<div class="body">
-		<p class="content auto-change-url"><%= comment.content %></p>
-	</div>
-
-	<div class="comment-footer">
-		<!-- コメントボタン -->
-		<a href="<%= new_reply_comment_path(comment.post_id, comment) %>", class="icon">
-			<%= image_tag("comment.png", alt: "Comment Icon", class: "icon") %>
-			<span class="count"><%= Comment.where(parent_comment_id: comment.id).count %></span>
-		</a>
-		<!-- 返信ボタン -->
-		<span class="ReplyButton">返信</span>
-		<!-- コメント元の投稿を表示するボタン -->
-		<% if comment.parent_comment_id %>
-			<a href="<%= new_reply_comment_path(comment.post_id, comment.parent_comment_id) %>", class="a-ReplySource">
-				<span class="ReplySource">コメント元を表示</span>
-			</a>
-		<% else %>
-			<a href="<%= new_comment_path(comment.post_id, 1) %>", class="a-ReplySource">
-				<span class="ReplySource">コメント元を表示</span>
-			</a>
+  <div class="header">
+    <div class="header_image">
+      <% if comment_user_profile.image.attached? %>
+        <%= link_to show_profile_path(comment_user_profile.user_id) do %>
+          <%= image_tag(comment_user_profile.image) %>
+        <% end %>
+      <% else %>
+        <%= link_to show_profile_path(comment_user_profile.user_id) do %>
+          <%= image_tag 'no_image.png' %>
+        <% end %>
+      <% end %>
+    </div>
+    <h2 class="username"><%= comment_user_profile.nickname %></h2>
+    <h2 class="timestamp">
+      <% if Time.current - comment.created_at < 24.hours %>
+        <%= comment.created_at.strftime("%H:%M") %> <!-- 24時間未満なら時間のみ -->
+      <% else %>
+        <%= comment.created_at.strftime("%Y/%m/%d") %> <!-- 24時間以上なら日付のみ -->
+      <% end %>
+    </h2>
+    <% if comment.user_id == current_user.id %>
+      <div class="dropdown">
+        <button class="dropdown-toggle">・・・</button>
+        <div class="dropdown-menu">
+          <%= link_to "削除", destroy_comment_path(comment), method: :delete, class: "dropdown-item", data: { confirm: "本当に削除しますか？" } %>
+        </div>
+      </div>
     <% end %>
-	</div>
+  </div>
+
+  <div class="body">
+    <p class="content auto-change-url"><%= comment.content %></p>
+  </div>
+
+  <div class="comment-footer">
+    <!-- コメントボタン -->
+    <a href="<%= new_reply_comment_path(comment.post_id, comment) %>", class="icon">
+      <%= image_tag("comment.png", alt: "Comment Icon", class: "icon") %>
+      <span class="count"><%= Comment.where(parent_comment_id: comment.id).count %></span>
+    </a>
+    <!-- 返信ボタン -->
+    <span class="ReplyButton">返信</span>
+    <!-- コメント元の投稿を表示するボタン -->
+    <% if comment.parent_comment_id %>
+      <a href="<%= new_reply_comment_path(comment.post_id, comment.parent_comment_id) %>", class="a-ReplySource">
+        <span class="ReplySource">コメント元を表示</span>
+      </a>
+    <% else %>
+      <a href="<%= new_comment_path(comment.post_id, 1) %>", class="a-ReplySource">
+        <span class="ReplySource">コメント元を表示</span>
+      </a>
+    <% end %>
+  </div>
 </div>
 
 <!-- 返信フォーム -->
 <div class="comment-reply-form-container ReplyForm" data-comment-id="<%= comment.id %>" style="display: none;">
-	<%= form_with(url: create_reply_comment_path(comment.post_id, comment), model: @comment, local: true, method: :post) do |f| %>
+  <%= form_with(url: create_reply_comment_path(comment.post_id, comment), model: @comment, local: true, method: :post) do |f| %>
 
-		<% if @comment.errors.any? %>
-			<ul class="error-messages">
-				<% @comment.errors.full_messages.each do |message| %>
-					<li>・<%= message %></li>
-				<% end %> </ul>
-		<% end %>
+    <% if @comment.errors.any? %>
+      <ul class="error-messages">
+        <% @comment.errors.full_messages.each do |message| %>
+          <li>・<%= message %></li>
+        <% end %> </ul>
+    <% end %>
 
-		<div class="form">
-			<div class="textarea">
-				<%= f.label "返信コメント", class: 'form-label' %>
-				<%= f.text_area :content, class: 'form-control' %>
-			</div>
+    <div class="form">
+      <div class="textarea">
+        <%= f.label "返信コメント", class: 'form-label' %>
+        <%= f.text_area :content, class: 'form-control' %>
+      </div>
 
-			<div class="button-group">
-				<%= f.submit '送信', class: 'btn btn-primary' %>
-			</div>
-		</div>
-	<% end %>
+      <div class="button-group">
+        <%= f.submit '送信', class: 'btn btn-primary' %>
+      </div>
+    </div>
+  <% end %>
 </div>
