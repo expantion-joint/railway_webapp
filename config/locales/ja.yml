@@ -218,7 +218,7 @@ ja:
       #      unauthenticated: 'You need to sign in or sign up before continuing.'
       unconfirmed: '本登録を行ってください。'
       #      unconfirmed: 'You have to confirm your account before continuing.'
-      locked: 'あなたのアカウントは凍結されています。'
+      locked: 'あなたのアカウントは凍結されています。アカウントの凍結解除方法はメールをご確認ください。'
       #      locked: 'Your account is locked.'
       invalid: 'メールアドレスかパスワードが違います。'
       #      invalid: 'Invalid email or password.'
