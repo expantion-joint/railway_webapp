@@ -229,8 +229,8 @@
         .username {
           margin: 0;
           font-size: 16px;
-          margin-right: 10px;
-          max-width: 180px;
+          margin-right: 5px;
+          max-width: calc(100% - 215px);
           white-space: nowrap;     /* テキストの折り返しを禁止 */
           overflow: hidden;        /* はみ出した部分を隠す */
           text-overflow: ellipsis; /* はみ出した部分を省略記号で表示 */
@@ -239,15 +239,15 @@
         .timestamp {
           margin: 0;
           color: #777;
-          font-size: 16px;
+          font-size: 14px;
         }
 
         .category {
           margin: 0;
-          font-size: 16px;
+          font-size: 14px;
           color: #777;
           font-weight: bold;
-          margin-right: 10px;
+          margin-right: 5px;
         }
 
         img {
@@ -414,8 +414,8 @@
         .username {
           margin: 0;
           font-size: 16px;
-          margin-right: 10px;
-          max-width: 180px;
+          margin-right: 5px;
+          max-width: calc(100% - 215px);
           white-space: nowrap;     /* テキストの折り返しを禁止 */
           overflow: hidden;        /* はみ出した部分を隠す */
           text-overflow: ellipsis; /* はみ出した部分を省略記号で表示 */
@@ -424,14 +424,14 @@
         .timestamp {
           margin: 0;
           color: #777;
-          font-size: 16px;
+          font-size: 14px;
         }
 
         .category {
           margin: 0;
-          font-size: 16px;
+          font-size: 14px;
           font-weight: bold;
-          margin-right: 10px;
+          margin-right: 5px;
         }
 
         img {
@@ -630,8 +630,8 @@
         .username {
           margin: 0;
           font-size: 16px;
-          margin-right: 10px;
-          max-width: 180px;
+          margin-right: 5px;
+          max-width: calc(100% - 215px);
           white-space: nowrap;     /* テキストの折り返しを禁止 */
           overflow: hidden;        /* はみ出した部分を隠す */
           text-overflow: ellipsis; /* はみ出した部分を省略記号で表示 */
@@ -640,14 +640,14 @@
         .timestamp {
           margin: 0;
           color: #777;
-          font-size: 16px;
+          font-size: 14px;
         }
 
         .category {
           margin: 0;
-          font-size: 16px;
+          font-size: 14px;
           font-weight: bold;
-          margin-right: 10px;
+          margin-right: 5px;
         }
 
         img {
@@ -784,8 +784,8 @@
         .username {
           margin: 0;
           font-size: 16px;
-          margin-right: 10px;
-          max-width: 180px;
+          margin-right: 5px;
+          max-width: calc(100% - 215px);
           white-space: nowrap;     /* テキストの折り返しを禁止 */
           overflow: hidden;        /* はみ出した部分を隠す */
           text-overflow: ellipsis; /* はみ出した部分を省略記号で表示 */
@@ -794,15 +794,15 @@
         .timestamp {
           margin: 0;
           color: #777;
-          font-size: 16px;
+          font-size: 14px;
         }
 
         .category {
           margin: 0;
-          font-size: 16px;
+          font-size: 14px;
           color: #777;
           font-weight: bold;
-          margin-right: 10px;
+          margin-right: 5px;
         }
 
         img {

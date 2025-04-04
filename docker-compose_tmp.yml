@@ -1,0 +1,81 @@
+services:
+  rails:
+    container_name: rails-railway
+    build:
+      context: .
+      dockerfile: .docker/local/ruby/Dockerfile
+      args:
+        RAILS_ENV: production # RAILS_ENV を Dockerfile に渡す
+    tty: true
+    command: >
+      bash -c "rm -f tmp/pids/unicorn.pid &&
+              bundle exec rake assets:precompile &&
+              bundle exec unicorn -c config/unicorn.rb -E production"
+    ports:
+      - "3000:3000"
+    working_dir: /src
+    environment:
+      RAILS_ENV: production
+    volumes:
+      - ./:/src
+    env_file:
+      - .env
+    depends_on:
+      - redis
+      
+  # mysql:
+  #   container_name: rails-mysql-railway
+  #   build: .docker/local/mysql
+  #   restart: always
+  #   ports:
+  #     - "3306:3306"
+  #   volumes:
+  #     - "./storage/mysql:/var/lib/mysql"
+  #   environment:
+  #     MYSQL_DATABASE: rails
+  #     MYSQL_USER: user
+  #     MYSQL_PASSWORD: password
+  #     MYSQL_ROOT_PASSWORD: password
+
+  redis:
+    image: redis:latest
+    container_name: rails-redis-railway
+    restart: always
+    ports:
+      - "6379:6379"
+
+  sidekiq:
+    build:
+      context: .
+      dockerfile: .docker/local/ruby/Dockerfile
+    container_name: rails-sidekiq-railway
+    depends_on:
+      - redis
+      - rails
+    volumes:
+      - ./:/src
+    working_dir: /src
+    command: bundle exec sidekiq
+    environment:
+      RAILS_ENV: production
+      REDIS_URL: redis://rails-redis-railway:6379/0
+  
+  nginx:
+    build:
+      context: .
+      dockerfile: .docker/local/nginx/Dockerfile
+    container_name: nginx-proxy
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./nginx/conf.d/default.conf:/etc/nginx/conf.d/default.conf
+      - ./nginx/cronjob.sh:/etc/cron.daily/certbot-renew
+      - ./public:/src/public
+      - ./etc/letsencrypt:/etc/letsencrypt  # 証明書を保存
+      - ./var/www/html:/var/www/html  # Certbot の認証用
+    depends_on:
+      - rails
+      - redis
+
+
