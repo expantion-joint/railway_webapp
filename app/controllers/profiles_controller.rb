@@ -41,7 +41,8 @@ class ProfilesController < ApplicationController
   def show
     @comment = Comment.new
     @profile = Profile.find_by(user_id: params[:user_id])
-    @likes = Like.where(user_id: params[:user_id])
+    post_ids = Post.where(user_id: params[:user_id]).pluck(:id)
+    @like_count = Like.where(post_id: post_ids).count
   
     if params[:type] == "post"
       @type = "post"

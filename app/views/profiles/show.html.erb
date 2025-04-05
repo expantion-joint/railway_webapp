@@ -13,10 +13,10 @@
       </div>
       <h2 class="username"><%= @profile.nickname %></h2>
       <div class="like-total">
-        <% if @likes.count >= 10000 %>
-          <span class="like-number"><%= (@likes.count/10000.to_f).floor(2) %>万</span>
+        <% if @like_count >= 10000 %>
+          <span class="like-number"><%= (@like_count/10000.to_f).floor(2) %>万</span>
         <% else %>
-          <span class="like-number"><%= @likes.count %></span>
+          <span class="like-number"><%= @like_count %></span>
         <% end %>
         <span class="like-unit">いいね</span>
       </div>
