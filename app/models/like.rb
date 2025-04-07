@@ -9,18 +9,15 @@ class Like < ApplicationRecord
 
   # 1週間以内のいいねを user_id ごとに集計する関数
   def self.recent_likes_count_weekly(profiles, start_of_last_week, end_of_last_week)
-    recent_likes_count_weekly = self
-      .where(created_at: start_of_last_week..end_of_last_week)        # 先週のデータを取得
-      .joins("INNER JOIN posts ON posts.id = #{table_name}.post_id")  # 「いいね」と「その対象となった投稿」をセットで扱う
-      .group("posts.user_id")                                         # 投稿者ごとにグループ化
-      .order("COUNT(posts.user_id) DESC")                             # いいねの数が多い順に並べる
-      .limit(10)                                                      # 上位10のみ
-      .count                                                          # 投稿者ごとの「いいね数」をカウント
+    likes_weekly = self.where(created_at: start_of_last_week..end_of_last_week)
+    posts = Post.where(id: likes_weekly.pluck(:post_id))
+    user_ids = posts.pluck(:user_id)
+    top_users = user_ids.tally.sort_by { |_, count| -count }.first(10)
 
-    # 結果を整形
-    recent_likes_count_weekly.map do |post_user_id, count|
-      profile = profiles.find_by(user_id: post_user_id)
-      [profile&.nickname || 'Unknown User', count, post_user_id]
+    recent_likes_count_weekly = top_users.map do |user_id, count|
+      profile = Profile.find_by(user_id: user_id)
+      nickname = profile&.nickname || "Unknown User"
+      [nickname, count, user_id]
     end
     return recent_likes_count_weekly
   end
