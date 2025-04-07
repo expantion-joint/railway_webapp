@@ -4,10 +4,10 @@
 
   <% if @recent_likes_count_weekly.present? %>
     <div class="rankings">
-      <% @recent_likes_count_weekly.each_with_index do |(nickname, count, user_id), index| %>
+      <% @recent_likes_count_weekly.each_with_index do |(nickname, count, post_user_id), index| %>
         <div class="ranking-item">
           <span class="rank-number"><%= index + 1 %></span>
-          <%= link_to show_profile_path(user_id), class: "nickname" do %>
+          <%= link_to show_profile_path(post_user_id), class: "nickname" do %>
             <span><%= nickname %></span>
           <% end %>
           <span class="like-count">+<%= count %></span>
