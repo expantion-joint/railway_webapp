@@ -14,7 +14,9 @@ class ProfilesController < ApplicationController
       @profile.image.attach(params[:profile][:image])
     end
     if @profile.save
-      redirect_to top_subscription_path, notice: '登録しました'
+      # サブスク登録なしで使用できるように以下をコメントアウト 2025.08.03
+      # redirect_to top_subscription_path, notice: '登録しました'
+      redirect_to index_post_path, notice: '登録しました'
     else
       render :new, status: :unprocessable_entity
     end

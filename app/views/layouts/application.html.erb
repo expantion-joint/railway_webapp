@@ -2,8 +2,8 @@
 <html>
   <head>
     <!-- title -->
-    <title>推し鉄.com&nbsp;|&nbsp;鉄道ファンのためのオンラインコミュニティ</title>
-    <meta name="description" content="推し鉄.comは、サブスク型の鉄道コミュニティです。広告や誹謗中傷がない場所で、最新の鉄道情報や深い知識を仲間と共有しましょう。">
+    <title>推し鉄.com&nbsp;|&nbsp;鉄道ファンのためのSNS</title>
+    <meta name="description" content="推し鉄.comは、鉄道ファン専用のSNSです。最新の鉄道情報や深い知識を仲間と共有しましょう。">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
@@ -29,7 +29,8 @@
           <span></span>
           <span></span>
           <div class=app-header-menu>menu</div>
-          <% if @subscription.stripe_payment_status == "paid" %>
+          <!--  サブスク登録なしで使用できるように以下をコメントアウト 2025.08.03 -->
+          <%# if @subscription.stripe_payment_status == "paid" %>
             <ul id="menu">
               <div class ="menu-text-bold">
                 <% if current_user&.admin? %>
@@ -71,10 +72,13 @@
                 <%= link_to "プロフィールの変更", edit_profile_path(current_user.id), class: "nav-link" %>
                 <div class="under-line"></div>
               </li>
-              <li>
-                <%= link_to "お支払い情報の変更", create_customer_portal_path, class: "nav-link" %>
-                <div class="under-line"></div>
-              </li>
+              <!--  サブスク登録なしで使用できるように以下をコメントアウト 2025.08.03 -->
+              <!--
+                <li>
+                  <%#= link_to "お支払い情報の変更", create_customer_portal_path, class: "nav-link" %>
+                  <div class="under-line"></div>
+                </li>
+              -->
               <li>
                 <%= link_to "パスワードの変更", edit_user_registration_path, class: "nav-link" %>
                 <div class="under-line"></div>
@@ -112,42 +116,45 @@
                 <div class="under-line"></div>
               </li>
             </ul>
-          <% else %>
+          <!--  サブスク登録なしで使用できるように以下をコメントアウト 2025.08.03 -->
+          <%# else %>
+          <!--
             <ul id="menu">
-              <div class ="menu-text-bold">
-                <% if current_user&.admin? %>
+              <div class="menu-text-bold">
+                <%# if current_user&.admin? %>
                   <li>
-                    <%= link_to "管理者ページ", new_admin_session_path, class: "nav-link" %>
+                    <%#= link_to "管理者ページ", new_admin_session_path, class: "nav-link" %>
                     <div class="under-line"></div>
                   </li>
-                <% end %>
+                <%# end %>
                 <li>
-                  <%= link_to "ホーム", index_post_path, class: "nav-link" %>
+                  <%#= link_to "ホーム", index_post_path, class: "nav-link" %>
                   <div class="under-line"></div>
                 </li>
                 <li>
-                  <%= link_to "パスワードの変更", edit_user_registration_path, class: "nav-link" %>
+                  <%#= link_to "パスワードの変更", edit_user_registration_path, class: "nav-link" %>
                   <div class="under-line"></div>
                 </li>
                 <li>
-                  <%= link_to "プライバシーポリシー", policy_home_path, class: "nav-link" %>
+                  <%#= link_to "プライバシーポリシー", policy_home_path, class: "nav-link" %>
                   <div class="under-line"></div>
                 </li>
                 <li>
-                  <%= link_to "利用規約", terms_home_path, class: "nav-link" %>
+                  <%#= link_to "利用規約", terms_home_path, class: "nav-link" %>
                   <div class="under-line"></div>
                 </li>
                 <li>
-                  <%= link_to "お問い合わせ", new_contact_path, class: "nav-link" %>
+                  <%#= link_to "お問い合わせ", new_contact_path, class: "nav-link" %>
                   <div class="under-line"></div>
                 </li>
                 <li>
-                  <%= link_to "ログアウト", destroy_user_session_path, method: :delete, class: "nav-link" %>
+                  <%#= link_to "ログアウト", destroy_user_session_path, method: :delete, class: "nav-link" %>
                   <div class="under-line"></div>
                 </li>
               </div>
             </ul>
-          <% end %>
+          -->
+          <%# end %>
         </div>
 
         <% profile = Profile.find_by(user_id: current_user.id) %>

@@ -14,14 +14,16 @@ class ApplicationController < ActionController::Base
       if profile.nil?
         new_profile_path
       else
+        # サブスク登録なしで使用できるように以下をコメントアウト 2025.08.03
         # 現在のユーザーのsubscriptionを取得
-        subscription = Subscription.find_by(user_id: resource.id)
+        # subscription = Subscription.find_by(user_id: resource.id)
         # subscriptionが存在し、stripe_payment_statusに基づいてリダイレクト先を分岐
-        if subscription.nil? || subscription.stripe_payment_status == "customer_created" || subscription.stripe_payment_status == "canceled" || subscription.stripe_payment_status.nil?
-          top_subscription_path
-        else
-          index_post_path
-        end
+        # if subscription.nil? || subscription.stripe_payment_status == "customer_created" || subscription.stripe_payment_status == "canceled" || subscription.stripe_payment_status.nil?
+        #   top_subscription_path
+        # else
+        #   index_post_path
+        # end
+        index_post_path # サブスク限定にする場合はコメントアウト
       end
     end
   end
@@ -30,9 +32,11 @@ class ApplicationController < ActionController::Base
     # 現在のユーザーのsubscriptionを取得
     subscription = Subscription.find_by(user_id: current_user.id)
     # subscriptionがnilの場合、またはstatusが特定の状態の場合、アクセスを拒否
-    if subscription.nil? || subscription.stripe_payment_status == "customer_created" || subscription.stripe_payment_status == "canceled" || subscription.stripe_payment_status.nil?
-      redirect_to index_home_path, alert: "サブスク登録してください"
-    end
+    
+    # サブスク登録なしで使用できるように以下をコメントアウト 2025.08.03
+    # if subscription.nil? || subscription.stripe_payment_status == "customer_created" || subscription.stripe_payment_status == "canceled" || subscription.stripe_payment_status.nil?
+    #   redirect_to index_home_path, alert: "サブスク登録してください"
+    # end
   end
 
   def find_subscription
